@@ -1,4 +1,4 @@
-module github.com/upbound/upjet-provider-template
+module github.com/saagie/provider-ovh
 
 go 1.19
 

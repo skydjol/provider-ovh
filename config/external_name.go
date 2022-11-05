@@ -10,7 +10,13 @@ import "github.com/upbound/upjet/pkg/config"
 // provider.
 var ExternalNameConfigs = map[string]config.ExternalName{
 	// Import requires using a randomly generated ID from provider: nl-2e21sda
-	"null_resource": config.IdentifierFromProvider,
+	"ovh_cloud_project_database":            config.IdentifierFromProvider,
+	"ovh_cloud_project_kube":                config.IdentifierFromProvider,
+	"ovh_cloud_project_kube_nodepool":       config.IdentifierFromProvider,
+	"ovh_cloud_project_kube_iprestrictions": config.IdentifierFromProvider,
+	"ovh_cloud_project_user":                config.IdentifierFromProvider,
+	"ovh_cloud_project_user_s3_policy":      config.IdentifierFromProvider,
+	"ovh_cloud_project_user_s3_credential":  config.IdentifierFromProvider,
 }
 
 // ExternalNameConfigurations applies all external name configs listed in the

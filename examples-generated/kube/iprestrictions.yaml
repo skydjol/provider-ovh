@@ -1,0 +1,19 @@
+apiVersion: kube.cloud.ovh.upbound.io/v1alpha1
+kind: IpRestrictions
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kube/v1alpha1/iprestrictions
+  labels:
+    testing.upbound.io/example-name: vrack_only
+  name: vrack-only
+spec:
+  forProvider:
+    ips:
+    - 10.42.0.0/16
+    kubeIdSelector:
+      matchLabels:
+        testing.upbound.io/example-name: example
+    serviceName: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+---
+

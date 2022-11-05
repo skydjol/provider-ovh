@@ -1,0 +1,16 @@
+apiVersion: kube.cloud.ovh.upbound.io/v1alpha1
+kind: Kube
+metadata:
+  annotations:
+    meta.upbound.io/example-id: kube/v1alpha1/kube
+  labels:
+    testing.upbound.io/example-name: mycluster
+  name: mycluster
+spec:
+  forProvider:
+    name: my_kube_cluster
+    region: GRA7
+    serviceName: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
+
+---
+
