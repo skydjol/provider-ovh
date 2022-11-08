@@ -4,6 +4,7 @@ import (
 	"github.com/upbound/upjet/pkg/config"
 )
 
+// Configure kube resources
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("ovh_cloud_project_kube", func(r *config.Resource) {
 		r.UseAsync = true

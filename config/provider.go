@@ -5,13 +5,14 @@ Copyright 2021 Upbound Inc.
 package config
 
 import (
-	// Note(turkenh): we are importing this to embed provider schema document
-	_ "embed"
 	"github.com/saagie/provider-ovh/config/database"
 	"github.com/saagie/provider-ovh/config/kube"
 	"github.com/saagie/provider-ovh/config/user"
 
 	ujconfig "github.com/upbound/upjet/pkg/config"
+
+	// Note(turkenh): we are importing this to embed provider schema document
+	_ "embed"
 )
 
 const (

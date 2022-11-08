@@ -4,6 +4,7 @@ import (
 	"github.com/upbound/upjet/pkg/config"
 )
 
+// Configure user resources
 func Configure(p *config.Provider) {
 	p.AddResourceConfigurator("ovh_cloud_project_user", func(r *config.Resource) {
 		r.ShortGroup = "user.cloud"
