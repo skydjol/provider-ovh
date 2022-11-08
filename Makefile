@@ -56,7 +56,7 @@ UP_CHANNEL = stable
 # ====================================================================================
 # Setup Images
 
-REGISTRY_ORGS ?= xpkg.upbound.io/upbound
+REGISTRY_ORGS ?= xpkg.upbound.io/skydjol
 IMAGES = $(PROJECT_NAME)
 -include build/makelib/imagelight.mk
 
