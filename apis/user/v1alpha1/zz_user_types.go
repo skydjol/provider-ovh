@@ -36,11 +36,29 @@ type UserObservation struct {
 	// the date the user was created.
 	CreationDate *string `json:"creationDate,omitempty" tf:"creation_date,omitempty"`
 
+	// A description associated with the user.
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
 	// id of the role
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
+	// a convenient map representing an openstack_rc file.
+	// Note: no password nor sensitive token is set in this map.
+	OpenstackRc map[string]*string `json:"openstackRc,omitempty" tf:"openstack_rc,omitempty"`
+
+	// The name of a role. See role_names.
+	RoleName *string `json:"roleName,omitempty" tf:"role_name,omitempty"`
+
+	// A list of role names. Values can be:
+	RoleNames []*string `json:"roleNames,omitempty" tf:"role_names,omitempty"`
+
 	// A list of roles associated with the user.
 	Roles []RolesObservation `json:"roles,omitempty" tf:"roles,omitempty"`
+
+	// The id of the public cloud project. If omitted,
+	// the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+	// Service name of the resource representing the id of the cloud project.
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 
 	// the status of the user. should be normally set to 'ok'.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
@@ -72,8 +90,8 @@ type UserParameters struct {
 	// The id of the public cloud project. If omitted,
 	// the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
 	// Service name of the resource representing the id of the cloud project.
-	// +kubebuilder:validation:Required
-	ServiceName *string `json:"serviceName" tf:"service_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 }
 
 // UserSpec defines the desired state of User
@@ -90,7 +108,7 @@ type UserStatus struct {
 
 // +kubebuilder:object:root=true
 
-// User is the Schema for the Users API. Creates a user in a public cloud project.
+// User is the Schema for the Users API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -100,8 +118,9 @@ type UserStatus struct {
 type User struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              UserSpec   `json:"spec"`
-	Status            UserStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.serviceName)",message="serviceName is a required parameter"
+	Spec   UserSpec   `json:"spec"`
+	Status UserStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -20,7 +20,7 @@ func (mg *Kube) GetTerraformResourceType() string {
 
 // GetConnectionDetailsMapping for this Kube
 func (tr *Kube) GetConnectionDetailsMapping() map[string]string {
-	return map[string]string{"kubeconfig": "status.atProvider.kubeconfig"}
+	return map[string]string{"kubeconfig": "status.atProvider.kubeconfig", "kubeconfig_attributes[*]": "status.atProvider.kubeconfigAttributes[*]"}
 }
 
 // GetObservation of this Kube

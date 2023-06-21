@@ -14,45 +14,197 @@ import (
 )
 
 type AdmissionpluginsObservation struct {
+
+	// Array of admission plugins disabled, default is [] and only AlwaysPulImages can be disabled at this time.
+	Disabled []*string `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// Array of admission plugins enabled, default is ["NodeRestriction","AlwaysPulImages"] and only these admission plugins can be enabled at this time.
+	Enabled []*string `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type AdmissionpluginsParameters struct {
 
+	// Array of admission plugins disabled, default is [] and only AlwaysPulImages can be disabled at this time.
 	// +kubebuilder:validation:Optional
 	Disabled []*string `json:"disabled,omitempty" tf:"disabled,omitempty"`
 
+	// Array of admission plugins enabled, default is ["NodeRestriction","AlwaysPulImages"] and only these admission plugins can be enabled at this time.
 	// +kubebuilder:validation:Optional
 	Enabled []*string `json:"enabled,omitempty" tf:"enabled,omitempty"`
 }
 
 type ApiserverObservation struct {
+
+	// Kubernetes API server admission plugins customization
+	Admissionplugins []AdmissionpluginsObservation `json:"admissionplugins,omitempty" tf:"admissionplugins,omitempty"`
 }
 
 type ApiserverParameters struct {
 
+	// Kubernetes API server admission plugins customization
 	// +kubebuilder:validation:Optional
 	Admissionplugins []AdmissionpluginsParameters `json:"admissionplugins,omitempty" tf:"admissionplugins,omitempty"`
 }
 
+type CustomizationApiserverAdmissionpluginsObservation struct {
+
+	// Array of admission plugins disabled, default is [] and only AlwaysPulImages can be disabled at this time.
+	Disabled []*string `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// Array of admission plugins enabled, default is ["NodeRestriction","AlwaysPulImages"] and only these admission plugins can be enabled at this time.
+	Enabled []*string `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CustomizationApiserverAdmissionpluginsParameters struct {
+
+	// Array of admission plugins disabled, default is [] and only AlwaysPulImages can be disabled at this time.
+	// +kubebuilder:validation:Optional
+	Disabled []*string `json:"disabled,omitempty" tf:"disabled,omitempty"`
+
+	// Array of admission plugins enabled, default is ["NodeRestriction","AlwaysPulImages"] and only these admission plugins can be enabled at this time.
+	// +kubebuilder:validation:Optional
+	Enabled []*string `json:"enabled,omitempty" tf:"enabled,omitempty"`
+}
+
+type CustomizationApiserverObservation struct {
+
+	// Kubernetes API server admission plugins customization
+	Admissionplugins []CustomizationApiserverAdmissionpluginsObservation `json:"admissionplugins,omitempty" tf:"admissionplugins,omitempty"`
+}
+
+type CustomizationApiserverParameters struct {
+
+	// Kubernetes API server admission plugins customization
+	// +kubebuilder:validation:Optional
+	Admissionplugins []CustomizationApiserverAdmissionpluginsParameters `json:"admissionplugins,omitempty" tf:"admissionplugins,omitempty"`
+}
+
+type CustomizationKubeProxyObservation struct {
+
+	// Kubernetes cluster kube-proxy customization of iptables specific config (durations format is RFC3339 duration, e.g. PT60S)
+	Iptables []IptablesObservation `json:"iptables,omitempty" tf:"iptables,omitempty"`
+
+	// Kubernetes cluster kube-proxy customization of IPVS specific config (durations format is RFC3339 duration, e.g. PT60S)
+	Ipvs []IpvsObservation `json:"ipvs,omitempty" tf:"ipvs,omitempty"`
+}
+
+type CustomizationKubeProxyParameters struct {
+
+	// Kubernetes cluster kube-proxy customization of iptables specific config (durations format is RFC3339 duration, e.g. PT60S)
+	// +kubebuilder:validation:Optional
+	Iptables []IptablesParameters `json:"iptables,omitempty" tf:"iptables,omitempty"`
+
+	// Kubernetes cluster kube-proxy customization of IPVS specific config (durations format is RFC3339 duration, e.g. PT60S)
+	// +kubebuilder:validation:Optional
+	Ipvs []IpvsParameters `json:"ipvs,omitempty" tf:"ipvs,omitempty"`
+}
+
 type CustomizationObservation struct {
+
+	// Kubernetes API server customization
+	Apiserver []ApiserverObservation `json:"apiserver,omitempty" tf:"apiserver,omitempty"`
 }
 
 type CustomizationParameters struct {
 
+	// Kubernetes API server customization
 	// +kubebuilder:validation:Optional
 	Apiserver []ApiserverParameters `json:"apiserver,omitempty" tf:"apiserver,omitempty"`
 }
 
+type IptablesObservation struct {
+
+	// Period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S). Must be greater than 0.
+	MinSyncPeriod *string `json:"minSyncPeriod,omitempty" tf:"min_sync_period,omitempty"`
+
+	// Minimum period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S).
+	SyncPeriod *string `json:"syncPeriod,omitempty" tf:"sync_period,omitempty"`
+}
+
+type IptablesParameters struct {
+
+	// Period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S). Must be greater than 0.
+	// +kubebuilder:validation:Optional
+	MinSyncPeriod *string `json:"minSyncPeriod,omitempty" tf:"min_sync_period,omitempty"`
+
+	// Minimum period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S).
+	// +kubebuilder:validation:Optional
+	SyncPeriod *string `json:"syncPeriod,omitempty" tf:"sync_period,omitempty"`
+}
+
+type IpvsObservation struct {
+
+	// Period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S). Must be greater than 0.
+	MinSyncPeriod *string `json:"minSyncPeriod,omitempty" tf:"min_sync_period,omitempty"`
+
+	// IPVS scheduler.
+	Scheduler *string `json:"scheduler,omitempty" tf:"scheduler,omitempty"`
+
+	// Minimum period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S).
+	SyncPeriod *string `json:"syncPeriod,omitempty" tf:"sync_period,omitempty"`
+
+	// Timeout value used for IPVS TCP sessions after receiving a FIN in RFC3339 duration (e.g. PT60S). The default value is PT0S, which preserves the current timeout value on the system.
+	TCPFinTimeout *string `json:"tcpFinTimeout,omitempty" tf:"tcp_fin_timeout,omitempty"`
+
+	// Timeout value used for idle IPVS TCP sessions in RFC3339 duration (e.g. PT60S). The default value is PT0S, which preserves the current timeout value on the system.
+	TCPTimeout *string `json:"tcpTimeout,omitempty" tf:"tcp_timeout,omitempty"`
+
+	// timeout value used for IPVS UDP packets in RFC3339 duration (e.g. PT60S). The default value is PT0S, which preserves the current timeout value on the system.
+	UDPTimeout *string `json:"udpTimeout,omitempty" tf:"udp_timeout,omitempty"`
+}
+
+type IpvsParameters struct {
+
+	// Period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S). Must be greater than 0.
+	// +kubebuilder:validation:Optional
+	MinSyncPeriod *string `json:"minSyncPeriod,omitempty" tf:"min_sync_period,omitempty"`
+
+	// IPVS scheduler.
+	// +kubebuilder:validation:Optional
+	Scheduler *string `json:"scheduler,omitempty" tf:"scheduler,omitempty"`
+
+	// Minimum period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S).
+	// +kubebuilder:validation:Optional
+	SyncPeriod *string `json:"syncPeriod,omitempty" tf:"sync_period,omitempty"`
+
+	// Timeout value used for IPVS TCP sessions after receiving a FIN in RFC3339 duration (e.g. PT60S). The default value is PT0S, which preserves the current timeout value on the system.
+	// +kubebuilder:validation:Optional
+	TCPFinTimeout *string `json:"tcpFinTimeout,omitempty" tf:"tcp_fin_timeout,omitempty"`
+
+	// Timeout value used for idle IPVS TCP sessions in RFC3339 duration (e.g. PT60S). The default value is PT0S, which preserves the current timeout value on the system.
+	// +kubebuilder:validation:Optional
+	TCPTimeout *string `json:"tcpTimeout,omitempty" tf:"tcp_timeout,omitempty"`
+
+	// timeout value used for IPVS UDP packets in RFC3339 duration (e.g. PT60S). The default value is PT0S, which preserves the current timeout value on the system.
+	// +kubebuilder:validation:Optional
+	UDPTimeout *string `json:"udpTimeout,omitempty" tf:"udp_timeout,omitempty"`
+}
+
 type KubeObservation struct {
 
-	// True if control-plane is up to date.
+	// True if control-plane is up-to-date.
 	ControlPlaneIsUpToDate *bool `json:"controlPlaneIsUpToDate,omitempty" tf:"control_plane_is_up_to_date,omitempty"`
+
+	// Deprecated  Use customization_apiserver and customization_kube_proxy instead. Kubernetes cluster customization
+	Customization []CustomizationObservation `json:"customization,omitempty" tf:"customization,omitempty"`
+
+	// Kubernetes API server customization
+	CustomizationApiserver []CustomizationApiserverObservation `json:"customizationApiserver,omitempty" tf:"customization_apiserver,omitempty"`
+
+	// Kubernetes kube-proxy customization
+	CustomizationKubeProxy []CustomizationKubeProxyObservation `json:"customizationKubeProxy,omitempty" tf:"customization_kube_proxy,omitempty"`
 
 	// Managed Kubernetes Service ID
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
 
-	// True if all nodes and control-plane are up to date.
+	// True if all nodes and control-plane are up-to-date.
 	IsUpToDate *bool `json:"isUpToDate,omitempty" tf:"is_up_to_date,omitempty"`
+
+	// Selected mode for kube-proxy. Changing this value recreates the resource, including ETCD user data. Defaults to iptables.
+	KubeProxyMode *string `json:"kubeProxyMode,omitempty" tf:"kube_proxy_mode,omitempty"`
+
+	// The name of the kubernetes cluster.
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Kubernetes versions available for upgrade.
 	NextUpgradeVersions []*string `json:"nextUpgradeVersions,omitempty" tf:"next_upgrade_versions,omitempty"`
@@ -60,18 +212,48 @@ type KubeObservation struct {
 	// Cluster nodes URL.
 	NodesURL *string `json:"nodesUrl,omitempty" tf:"nodes_url,omitempty"`
 
+	// The private network configuration
+	PrivateNetworkConfiguration []PrivateNetworkConfigurationObservation `json:"privateNetworkConfiguration,omitempty" tf:"private_network_configuration,omitempty"`
+
+	// OpenStack private network (or vRack) ID to use. Changing this value recreates the resource, including ETCD user data. Defaults - not use private network.
+	PrivateNetworkID *string `json:"privateNetworkId,omitempty" tf:"private_network_id,omitempty"`
+
+	// a valid OVHcloud public cloud region ID in which the kubernetes cluster will be available. Ex.: "GRA1". Defaults to all public cloud regions. Changing this value recreates the resource.
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// The id of the public cloud project. If omitted, the OVH_CLOUD_PROJECT_SERVICE environment variable is used. Changing this value recreates the resource.
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
+
 	// Cluster status. Should be normally set to 'READY'.
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
 	// Management URL of your cluster.
 	URL *string `json:"url,omitempty" tf:"url,omitempty"`
+
+	// Cluster update policy. Choose between [ALWAYS_UPDATE, MINIMAL_DOWNTIME, NEVER_UPDATE].
+	UpdatePolicy *string `json:"updatePolicy,omitempty" tf:"update_policy,omitempty"`
+
+	// kubernetes version to use. Changing this value updates the resource. Defaults to the latest available.
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type KubeParameters struct {
 
-	// Customer customization object
+	// Deprecated  Use customization_apiserver and customization_kube_proxy instead. Kubernetes cluster customization
 	// +kubebuilder:validation:Optional
 	Customization []CustomizationParameters `json:"customization,omitempty" tf:"customization,omitempty"`
+
+	// Kubernetes API server customization
+	// +kubebuilder:validation:Optional
+	CustomizationApiserver []CustomizationApiserverParameters `json:"customizationApiserver,omitempty" tf:"customization_apiserver,omitempty"`
+
+	// Kubernetes kube-proxy customization
+	// +kubebuilder:validation:Optional
+	CustomizationKubeProxy []CustomizationKubeProxyParameters `json:"customizationKubeProxy,omitempty" tf:"customization_kube_proxy,omitempty"`
+
+	// Selected mode for kube-proxy. Changing this value recreates the resource, including ETCD user data. Defaults to iptables.
+	// +kubebuilder:validation:Optional
+	KubeProxyMode *string `json:"kubeProxyMode,omitempty" tf:"kube_proxy_mode,omitempty"`
 
 	// The name of the kubernetes cluster.
 	// +kubebuilder:validation:Optional
@@ -81,41 +263,64 @@ type KubeParameters struct {
 	// +kubebuilder:validation:Optional
 	PrivateNetworkConfiguration []PrivateNetworkConfigurationParameters `json:"privateNetworkConfiguration,omitempty" tf:"private_network_configuration,omitempty"`
 
-	// OpenStack private network ID to use.
-	// Changing this value delete the resource(including ETCD user data). Defaults - not use private network.
+	// OpenStack private network (or vRack) ID to use. Changing this value recreates the resource, including ETCD user data. Defaults - not use private network.
 	// +kubebuilder:validation:Optional
 	PrivateNetworkID *string `json:"privateNetworkId,omitempty" tf:"private_network_id,omitempty"`
 
-	// a valid OVHcloud public cloud region ID in which the kubernetes
-	// cluster will be available. Ex.: "GRA1". Defaults to all public cloud regions.
-	// Changing this value recreates the resource.
-	// +kubebuilder:validation:Required
-	Region *string `json:"region" tf:"region,omitempty"`
+	// a valid OVHcloud public cloud region ID in which the kubernetes cluster will be available. Ex.: "GRA1". Defaults to all public cloud regions. Changing this value recreates the resource.
+	// +kubebuilder:validation:Optional
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
 
-	// The id of the public cloud project. If omitted,
-	// the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-	// +kubebuilder:validation:Required
-	ServiceName *string `json:"serviceName" tf:"service_name,omitempty"`
+	// The id of the public cloud project. If omitted, the OVH_CLOUD_PROJECT_SERVICE environment variable is used. Changing this value recreates the resource.
+	// +kubebuilder:validation:Optional
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 
 	// Cluster update policy. Choose between [ALWAYS_UPDATE, MINIMAL_DOWNTIME, NEVER_UPDATE].
 	// +kubebuilder:validation:Optional
 	UpdatePolicy *string `json:"updatePolicy,omitempty" tf:"update_policy,omitempty"`
 
-	// kubernetes version to use.
-	// Changing this value updates the resource. Defaults to latest available.
+	// kubernetes version to use. Changing this value updates the resource. Defaults to the latest available.
 	// +kubebuilder:validation:Optional
 	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
+type KubeconfigAttributesObservation struct {
+
+	// The kubernetes API server client certificate.
+	ClientCertificate *string `json:"clientCertificate,omitempty" tf:"client_certificate,omitempty"`
+
+	// The kubernetes API server client key.
+	ClientKey *string `json:"clientKey,omitempty" tf:"client_key,omitempty"`
+
+	// The kubernetes API server CA certificate.
+	ClusterCACertificate *string `json:"clusterCaCertificate,omitempty" tf:"cluster_ca_certificate,omitempty"`
+
+	// The kubernetes API server URL.
+	Host *string `json:"host,omitempty" tf:"host,omitempty"`
+}
+
+type KubeconfigAttributesParameters struct {
+}
+
 type PrivateNetworkConfigurationObservation struct {
+
+	// If defined, all egress traffic will be routed towards this IP address, which should belong to the private network. Empty string means disabled.
+	// If defined, all egress traffic will be routed towards this IP address, which should belong to the private network. Empty string means disabled.
+	DefaultVrackGateway *string `json:"defaultVrackGateway,omitempty" tf:"default_vrack_gateway,omitempty"`
+
+	// Defines whether routing should default to using the nodes' private interface, instead of their public interface. Default is false.
+	// Defines whether routing should default to using the nodes' private interface, instead of their public interface. Default is false.
+	PrivateNetworkRoutingAsDefault *bool `json:"privateNetworkRoutingAsDefault,omitempty" tf:"private_network_routing_as_default,omitempty"`
 }
 
 type PrivateNetworkConfigurationParameters struct {
 
 	// If defined, all egress traffic will be routed towards this IP address, which should belong to the private network. Empty string means disabled.
+	// If defined, all egress traffic will be routed towards this IP address, which should belong to the private network. Empty string means disabled.
 	// +kubebuilder:validation:Required
 	DefaultVrackGateway *string `json:"defaultVrackGateway" tf:"default_vrack_gateway,omitempty"`
 
+	// Defines whether routing should default to using the nodes' private interface, instead of their public interface. Default is false.
 	// Defines whether routing should default to using the nodes' private interface, instead of their public interface. Default is false.
 	// +kubebuilder:validation:Required
 	PrivateNetworkRoutingAsDefault *bool `json:"privateNetworkRoutingAsDefault" tf:"private_network_routing_as_default,omitempty"`
@@ -135,7 +340,7 @@ type KubeStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Kube is the Schema for the Kubes API. Creates a kubernetes managed cluster in a public cloud project.
+// Kube is the Schema for the Kubes API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -145,8 +350,10 @@ type KubeStatus struct {
 type Kube struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              KubeSpec   `json:"spec"`
-	Status            KubeStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.region)",message="region is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.serviceName)",message="serviceName is a required parameter"
+	Spec   KubeSpec   `json:"spec"`
+	Status KubeStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

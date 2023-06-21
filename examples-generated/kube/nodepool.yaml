@@ -4,8 +4,8 @@ metadata:
   annotations:
     meta.upbound.io/example-id: kube/v1alpha1/nodepool
   labels:
-    testing.upbound.io/example-name: pool
-  name: pool
+    testing.upbound.io/example-name: node_pool
+  name: node-pool
 spec:
   forProvider:
     desiredNodes: 3
@@ -15,25 +15,8 @@ spec:
         testing.upbound.io/example-name: example
     maxNodes: 3
     minNodes: 3
-    name: my-pool
+    name: my-pool-1
     serviceName: xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx
-    template:
-    - metadata:
-      - annotations:
-          k1: v1
-          k2: v2
-        finalizers:
-        - F1
-        - F2
-        labels:
-          k3: v3
-          k4: v4
-      spec:
-      - taints:
-        - effect: PreferNoSchedule
-          key: k
-          value: v
-        unschedulable: false
 
 ---
 

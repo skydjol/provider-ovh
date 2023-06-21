@@ -15,20 +15,33 @@ import (
 
 type S3PolicyObservation struct {
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The policy document. This is a JSON formatted string. See examples of policies on public documentation.
+	// The policy document. This is a JSON formatted string.
+	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
+
+	// The ID of the public cloud project. If omitted,
+	// the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+	// Service name of the resource representing the ID of the cloud project.
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
+
+	// The ID of a public cloud project's user.
+	// The user ID
+	UserID *string `json:"userId,omitempty" tf:"user_id,omitempty"`
 }
 
 type S3PolicyParameters struct {
 
 	// The policy document. This is a JSON formatted string. See examples of policies on public documentation.
 	// The policy document. This is a JSON formatted string.
-	// +kubebuilder:validation:Required
-	Policy *string `json:"policy" tf:"policy,omitempty"`
+	// +kubebuilder:validation:Optional
+	Policy *string `json:"policy,omitempty" tf:"policy,omitempty"`
 
 	// The ID of the public cloud project. If omitted,
 	// the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
 	// Service name of the resource representing the ID of the cloud project.
-	// +kubebuilder:validation:Required
-	ServiceName *string `json:"serviceName" tf:"service_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 
 	// The ID of a public cloud project's user.
 	// The user ID
@@ -59,7 +72,7 @@ type S3PolicyStatus struct {
 
 // +kubebuilder:object:root=true
 
-// S3Policy is the Schema for the S3Policys API. Set the S3 Policy of a public cloud project user.
+// S3Policy is the Schema for the S3Policys API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -69,8 +82,10 @@ type S3PolicyStatus struct {
 type S3Policy struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              S3PolicySpec   `json:"spec"`
-	Status            S3PolicyStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.policy)",message="policy is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.serviceName)",message="serviceName is a required parameter"
+	Spec   S3PolicySpec   `json:"spec"`
+	Status S3PolicyStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

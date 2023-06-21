@@ -1,17 +1,18 @@
 # ====================================================================================
 # Setup Project
 
-PROJECT_NAME := provider-ovh
-PROJECT_REPO := github.com/saagie/$(PROJECT_NAME)
+PROJECT_NAME ?= provider-ovh
+PROJECT_REPO ?= github.com/saagie/$(PROJECT_NAME)
 
-export TERRAFORM_VERSION := 1.3.3
+export TERRAFORM_VERSION ?= 1.3.9
 
-export TERRAFORM_PROVIDER_SOURCE := ovh/ovh
-export TERRAFORM_PROVIDER_REPO := https://github.com/ovh/terraform-provider-ovh
-export TERRAFORM_PROVIDER_VERSION := 0.22.0
-export TERRAFORM_PROVIDER_DOWNLOAD_NAME := terraform-provider-ovh
-export TERRAFORM_NATIVE_PROVIDER_BINARY := terraform-provider-ovh_0.22.0_x5
-export TERRAFORM_DOCS_PATH := website/docs
+export TERRAFORM_PROVIDER_SOURCE ?= ovh/ovh
+export TERRAFORM_PROVIDER_REPO ?= https://github.com/ovh/terraform-provider-ovh
+export TERRAFORM_PROVIDER_VERSION ?= 0.31.0
+export TERRAFORM_PROVIDER_DOWNLOAD_NAME ?= terraform-provider-ovh
+export TERRAFORM_PROVIDER_DOWNLOAD_URL_PREFIX ?= https://releases.hashicorp.com/$(TERRAFORM_PROVIDER_DOWNLOAD_NAME)/$(TERRAFORM_PROVIDER_VERSION)
+export TERRAFORM_NATIVE_PROVIDER_BINARY ?= terraform-provider-ovh_0.31.0_x5
+export TERRAFORM_DOCS_PATH ?= website/docs/r
 
 PLATFORMS ?= linux_amd64 linux_arm64
 
@@ -38,7 +39,7 @@ NPROCS ?= 1
 # to half the number of CPU cores.
 GO_TEST_PARALLEL := $(shell echo $$(( $(NPROCS) / 2 )))
 
-GO_REQUIRED_VERSION ?= 1.19
+GO_REQUIRED_VERSION ?= 1.20
 GOLANGCILINT_VERSION ?= 1.50.0
 GO_STATIC_PACKAGES = $(GO_PROJECT)/cmd/provider $(GO_PROJECT)/cmd/generator
 GO_LDFLAGS += -X $(GO_PROJECT)/internal/version.Version=$(VERSION)
@@ -48,9 +49,10 @@ GO_SUBDIRS += cmd internal apis
 # ====================================================================================
 # Setup Kubernetes tools
 
-KIND_VERSION = v0.15.0
-UP_VERSION = v0.14.0
+KIND_VERSION = v0.17.0
+UP_VERSION = v0.15.0
 UP_CHANNEL = stable
+UPTEST_VERSION = v0.5.0
 -include build/makelib/k8s_tools.mk
 
 # ====================================================================================
@@ -70,14 +72,6 @@ XPKG_REG_ORGS_NO_PROMOTE ?= xpkg.upbound.io/upbound
 XPKGS = $(PROJECT_NAME)
 -include build/makelib/xpkg.mk
 
-# NOTE(hasheddan): we force image building to happen prior to xpkg build so that
-# we ensure image is present in daemon.
-xpkg.build.provider-ovh: do.build.images
-
-# NOTE(hasheddan): we ensure up is installed prior to running platform-specific
-# build steps in parallel to avoid encountering an installation race condition.
-build.init: $(UP)
-
 # ====================================================================================
 # Fallthrough
 
@@ -91,6 +85,14 @@ build.init: $(UP)
 fallthrough: submodules
 	@echo Initial setup complete. Running make again . . .
 	@make
+
+# NOTE(hasheddan): we force image building to happen prior to xpkg build so that
+# we ensure image is present in daemon.
+xpkg.build.upjet-provider-template: do.build.images
+
+# NOTE(hasheddan): we ensure up is installed prior to running platform-specific
+# build steps in parallel to avoid encountering an installation race condition.
+build.init: $(UP)
 
 # ====================================================================================
 # Setup Terraform for fetching provider schema
@@ -155,7 +157,26 @@ submodules:
 run: go.build
 	@$(INFO) Running Crossplane locally out-of-cluster . . .
 	@# To see other arguments that can be provided, run the command with --help instead
-	UPBOUND_CONTEXT="local" $(GO_OUT_DIR)/provider --debug
+	UPBOUND_CONTEXT="local" $(GO_OUT_DIR)/provider --debug --enable-management-policies
+
+# ====================================================================================
+# End to End Testing
+CROSSPLANE_NAMESPACE = upbound-system
+-include build/makelib/local.xpkg.mk
+-include build/makelib/controlplane.mk
+
+uptest: $(UPTEST) $(KUBECTL) $(KUTTL)
+	@$(INFO) running automated tests
+	@KUBECTL=$(KUBECTL) KUTTL=$(KUTTL) $(UPTEST) e2e "${UPTEST_EXAMPLE_LIST}" --setup-script=cluster/test/setup.sh || $(FAIL)
+	@$(OK) running automated tests
+
+local-deploy: build controlplane.up local.xpkg.deploy.provider.$(PROJECT_NAME)
+	@$(INFO) running locally built provider
+	@$(KUBECTL) wait provider.pkg $(PROJECT_NAME) --for condition=Healthy --timeout 5m
+	@$(KUBECTL) -n upbound-system wait --for=condition=Available deployment --all --timeout=5m
+	@$(OK) running locally built provider
+
+e2e: local-deploy uptest
 
 .PHONY: cobertura submodules fallthrough run crds.clean
 

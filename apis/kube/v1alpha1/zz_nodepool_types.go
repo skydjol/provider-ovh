@@ -14,24 +14,47 @@ import (
 )
 
 type MetadataObservation struct {
+
+	// Annotations to apply to each node
+	// annotations
+	Annotations map[string]*string `json:"annotations,omitempty" tf:"annotations,omitempty"`
+
+	// Finalizers to apply to each node
+	// finalizers
+	Finalizers []*string `json:"finalizers,omitempty" tf:"finalizers,omitempty"`
+
+	// Labels to apply to each node
+	// labels
+	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 }
 
 type MetadataParameters struct {
 
+	// Annotations to apply to each node
 	// annotations
 	// +kubebuilder:validation:Optional
 	Annotations map[string]*string `json:"annotations,omitempty" tf:"annotations,omitempty"`
 
+	// Finalizers to apply to each node
 	// finalizers
 	// +kubebuilder:validation:Optional
 	Finalizers []*string `json:"finalizers,omitempty" tf:"finalizers,omitempty"`
 
+	// Labels to apply to each node
 	// labels
 	// +kubebuilder:validation:Optional
 	Labels map[string]*string `json:"labels,omitempty" tf:"labels,omitempty"`
 }
 
 type NodePoolObservation struct {
+
+	// should the pool use the anti-affinity feature. Default to false. Changing this value recreates the resource.
+	// Enable anti affinity groups for nodes in the pool
+	AntiAffinity *bool `json:"antiAffinity,omitempty" tf:"anti_affinity,omitempty"`
+
+	// Enable auto-scaling for the pool. Default to false.
+	// Enable auto-scaling for the pool
+	Autoscale *bool `json:"autoscale,omitempty" tf:"autoscale,omitempty"`
 
 	// Number of nodes which are actually ready in the pool
 	// Number of nodes which are actually ready in the pool
@@ -45,15 +68,48 @@ type NodePoolObservation struct {
 	// Number of nodes present in the pool
 	CurrentNodes *float64 `json:"currentNodes,omitempty" tf:"current_nodes,omitempty"`
 
+	// number of nodes to start.
+	// Number of nodes you desire in the pool
+	DesiredNodes *float64 `json:"desiredNodes,omitempty" tf:"desired_nodes,omitempty"`
+
 	// Flavor name
 	// Flavor name
 	Flavor *string `json:"flavor,omitempty" tf:"flavor,omitempty"`
 
+	// a valid OVHcloud public cloud flavor ID in which the nodes will be started. Ex: "b2-7". You can find the list of flavor IDs: https://www.ovhcloud.com/fr/public-cloud/prices/.
+	// Changing this value recreates the resource.
+	// Flavor name
+	FlavorName *string `json:"flavorName,omitempty" tf:"flavor_name,omitempty"`
+
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// The id of the managed kubernetes cluster. Changing this value recreates the resource.
+	// Kube ID
+	KubeID *string `json:"kubeId,omitempty" tf:"kube_id,omitempty"`
+
+	// maximum number of nodes allowed in the pool. Setting desired_nodes over this value will raise an error.
+	// Number of nodes you desire in the pool
+	MaxNodes *float64 `json:"maxNodes,omitempty" tf:"max_nodes,omitempty"`
+
+	// minimum number of nodes allowed in the pool. Setting desired_nodes under this value will raise an error.
+	// Number of nodes you desire in the pool
+	MinNodes *float64 `json:"minNodes,omitempty" tf:"min_nodes,omitempty"`
+
+	// should the nodes be billed on a monthly basis. Default to false. Changing this value recreates the resource.
+	// Enable monthly billing on all nodes in the pool
+	MonthlyBilled *bool `json:"monthlyBilled,omitempty" tf:"monthly_billed,omitempty"`
+
+	// The name of the nodepool. Warning: _ char is not allowed! Changing this value recreates the resource.
+	// NodePool resource name
+	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
 	// Project id
 	// Project id
 	ProjectID *string `json:"projectId,omitempty" tf:"project_id,omitempty"`
+
+	// The id of the public cloud project. If omitted, the OVH_CLOUD_PROJECT_SERVICE environment variable is used. Changing this value recreates the resource.
+	// Service name
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 
 	// Status describing the state between number of nodes wanted and available ones
 	// Status describing the state between number of nodes wanted and available ones
@@ -63,7 +119,10 @@ type NodePoolObservation struct {
 	// Current status
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
 
-	// Number of nodes with latest version installed in the pool
+	// Node pool template
+	Template []TemplateObservation `json:"template,omitempty" tf:"template,omitempty"`
+
+	// Number of nodes with the latest version installed in the pool
 	// Number of nodes with latest version installed in the pool
 	UpToDateNodes *float64 `json:"upToDateNodes,omitempty" tf:"up_to_date_nodes,omitempty"`
 
@@ -74,7 +133,7 @@ type NodePoolObservation struct {
 
 type NodePoolParameters struct {
 
-	// should the pool use the anti-affinity feature. Default to false.
+	// should the pool use the anti-affinity feature. Default to false. Changing this value recreates the resource.
 	// Enable anti affinity groups for nodes in the pool
 	// +kubebuilder:validation:Optional
 	AntiAffinity *bool `json:"antiAffinity,omitempty" tf:"anti_affinity,omitempty"`
@@ -89,14 +148,13 @@ type NodePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	DesiredNodes *float64 `json:"desiredNodes,omitempty" tf:"desired_nodes,omitempty"`
 
-	// a valid OVHcloud public cloud flavor ID in which the nodes will be started.
-	// Ex: "b2-7". Changing this value recreates the resource.
-	// You can find the list of flavor IDs: https://www.ovhcloud.com/fr/public-cloud/prices/
+	// a valid OVHcloud public cloud flavor ID in which the nodes will be started. Ex: "b2-7". You can find the list of flavor IDs: https://www.ovhcloud.com/fr/public-cloud/prices/.
+	// Changing this value recreates the resource.
 	// Flavor name
-	// +kubebuilder:validation:Required
-	FlavorName *string `json:"flavorName" tf:"flavor_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	FlavorName *string `json:"flavorName,omitempty" tf:"flavor_name,omitempty"`
 
-	// The id of the managed kubernetes cluster.
+	// The id of the managed kubernetes cluster. Changing this value recreates the resource.
 	// Kube ID
 	// +crossplane:generate:reference:type=github.com/saagie/provider-ovh/apis/kube/v1alpha1.Kube
 	// +kubebuilder:validation:Optional
@@ -110,35 +168,30 @@ type NodePoolParameters struct {
 	// +kubebuilder:validation:Optional
 	KubeIDSelector *v1.Selector `json:"kubeIdSelector,omitempty" tf:"-"`
 
-	// maximum number of nodes allowed in the pool.
-	// Setting desired_nodes over this value will raise an error.
+	// maximum number of nodes allowed in the pool. Setting desired_nodes over this value will raise an error.
 	// Number of nodes you desire in the pool
 	// +kubebuilder:validation:Optional
 	MaxNodes *float64 `json:"maxNodes,omitempty" tf:"max_nodes,omitempty"`
 
-	// minimum number of nodes allowed in the pool.
-	// Setting desired_nodes under this value will raise an error.
+	// minimum number of nodes allowed in the pool. Setting desired_nodes under this value will raise an error.
 	// Number of nodes you desire in the pool
 	// +kubebuilder:validation:Optional
 	MinNodes *float64 `json:"minNodes,omitempty" tf:"min_nodes,omitempty"`
 
-	// should the nodes be billed on a monthly basis. Default to false.
+	// should the nodes be billed on a monthly basis. Default to false. Changing this value recreates the resource.
 	// Enable monthly billing on all nodes in the pool
 	// +kubebuilder:validation:Optional
 	MonthlyBilled *bool `json:"monthlyBilled,omitempty" tf:"monthly_billed,omitempty"`
 
-	// The name of the nodepool.
-	// Changing this value recreates the resource.
-	// Warning: "_" char is not allowed!
+	// The name of the nodepool. Warning: _ char is not allowed! Changing this value recreates the resource.
 	// NodePool resource name
 	// +kubebuilder:validation:Optional
 	Name *string `json:"name,omitempty" tf:"name,omitempty"`
 
-	// The id of the public cloud project. If omitted,
-	// the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+	// The id of the public cloud project. If omitted, the OVH_CLOUD_PROJECT_SERVICE environment variable is used. Changing this value recreates the resource.
 	// Service name
-	// +kubebuilder:validation:Required
-	ServiceName *string `json:"serviceName" tf:"service_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 
 	// Node pool template
 	// +kubebuilder:validation:Optional
@@ -146,28 +199,48 @@ type NodePoolParameters struct {
 }
 
 type SpecObservation struct {
+
+	// Taints to apply to each node
+	// taints
+	Taints []map[string]*string `json:"taints,omitempty" tf:"taints,omitempty"`
+
+	// If true, set nodes as un-schedulable
+	// unschedulable
+	Unschedulable *bool `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 }
 
 type SpecParameters struct {
 
+	// Taints to apply to each node
 	// taints
 	// +kubebuilder:validation:Optional
 	Taints []map[string]*string `json:"taints,omitempty" tf:"taints,omitempty"`
 
+	// If true, set nodes as un-schedulable
 	// unschedulable
 	// +kubebuilder:validation:Optional
 	Unschedulable *bool `json:"unschedulable,omitempty" tf:"unschedulable,omitempty"`
 }
 
 type TemplateObservation struct {
+
+	// Metadata of each node in the pool
+	// metadata
+	Metadata []MetadataObservation `json:"metadata,omitempty" tf:"metadata,omitempty"`
+
+	// Spec of each node in the pool
+	// spec
+	Spec []SpecObservation `json:"spec,omitempty" tf:"spec,omitempty"`
 }
 
 type TemplateParameters struct {
 
+	// Metadata of each node in the pool
 	// metadata
 	// +kubebuilder:validation:Optional
 	Metadata []MetadataParameters `json:"metadata,omitempty" tf:"metadata,omitempty"`
 
+	// Spec of each node in the pool
 	// spec
 	// +kubebuilder:validation:Optional
 	Spec []SpecParameters `json:"spec,omitempty" tf:"spec,omitempty"`
@@ -187,7 +260,7 @@ type NodePoolStatus struct {
 
 // +kubebuilder:object:root=true
 
-// NodePool is the Schema for the NodePools API. Creates a nodepool in a kubernetes managed cluster.
+// NodePool is the Schema for the NodePools API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -197,8 +270,10 @@ type NodePoolStatus struct {
 type NodePool struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              NodePoolSpec   `json:"spec"`
-	Status            NodePoolStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.flavorName)",message="flavorName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.serviceName)",message="serviceName is a required parameter"
+	Spec   NodePoolSpec   `json:"spec"`
+	Status NodePoolStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true

@@ -3,8 +3,7 @@ apiVersion: apiextensions.k8s.io/v1
 kind: CustomResourceDefinition
 metadata:
   annotations:
-    controller-gen.kubebuilder.io/version: v0.8.0
-  creationTimestamp: null
+    controller-gen.kubebuilder.io/version: v0.12.0
   name: databases.database.cloud.ovh.upbound.io
 spec:
   group: database.cloud.ovh.upbound.io
@@ -35,8 +34,7 @@ spec:
     name: v1alpha1
     schema:
       openAPIV3Schema:
-        description: Database is the Schema for the Databases API. Creates a managed
-          database cluster in a public cloud project.
+        description: Database is the Schema for the Databases API.
         properties:
           apiVersion:
             description: 'APIVersion defines the versioned schema of this representation
@@ -55,19 +53,33 @@ spec:
             properties:
               deletionPolicy:
                 default: Delete
-                description: DeletionPolicy specifies what will happen to the underlying
+                description: 'DeletionPolicy specifies what will happen to the underlying
                   external when this managed resource is deleted - either "Delete"
-                  or "Orphan" the external resource.
+                  or "Orphan" the external resource. This field is planned to be deprecated
+                  in favor of the ManagementPolicy field in a future release. Currently,
+                  both could be set independently and non-default values would be
+                  honored if the feature flag is enabled. See the design doc for more
+                  information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
                 enum:
                 - Orphan
                 - Delete
                 type: string
               forProvider:
                 properties:
+                  advancedConfiguration:
+                    additionalProperties:
+                      type: string
+                    description: Advanced configuration key / value. Advanced configuration
+                      key / value
+                    type: object
                   description:
                     description: Small description of the database service. Description
                       of the cluster
                     type: string
+                  diskSize:
+                    description: The disk size (in GB) of the database service. Disk
+                      size attributes of the cluster
+                    type: number
                   engine:
                     description: The database engine you want to deploy. To get a
                       full list of available engine visit. public documentation. Name
@@ -125,14 +137,22 @@ spec:
                     description: The version of the engine in which the service should
                       be deployed Version of the engine deployed on the cluster
                     type: string
-                required:
-                - engine
-                - flavor
-                - nodes
-                - plan
-                - serviceName
-                - version
                 type: object
+              managementPolicy:
+                default: FullControl
+                description: 'THIS IS AN ALPHA FIELD. Do not use it in production.
+                  It is not honored unless the relevant Crossplane feature flag is
+                  enabled, and may be changed or removed without notice. ManagementPolicy
+                  specifies the level of control Crossplane has over the managed external
+                  resource. This field is planned to replace the DeletionPolicy field
+                  in a future release. Currently, both could be set independently
+                  and non-default values would be honored if the feature flag is enabled.
+                  See the design doc for more information: https://github.com/crossplane/crossplane/blob/499895a25d1a1a0ba1604944ef98ac7a1a71f197/design/design-doc-observe-only-resources.md?plain=1#L223'
+                enum:
+                - FullControl
+                - ObserveOnly
+                - OrphanOnDelete
+                type: string
               providerConfigRef:
                 default:
                   name: default
@@ -304,11 +324,30 @@ spec:
             required:
             - forProvider
             type: object
+            x-kubernetes-validations:
+            - message: engine is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.engine)
+            - message: flavor is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.flavor)
+            - message: nodes is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.nodes)
+            - message: plan is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.plan)
+            - message: serviceName is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.serviceName)
+            - message: version is a required parameter
+              rule: self.managementPolicy == 'ObserveOnly' || has(self.forProvider.version)
           status:
             description: DatabaseStatus defines the observed state of Database.
             properties:
               atProvider:
                 properties:
+                  advancedConfiguration:
+                    additionalProperties:
+                      type: string
+                    description: Advanced configuration key / value. Advanced configuration
+                      key / value
+                    type: object
                   backupTime:
                     description: Time on which backups start every day. Time on which
                       backups start every day
@@ -316,6 +355,18 @@ spec:
                   createdAt:
                     description: Date of the creation of the cluster. Date of the
                       creation of the cluster
+                    type: string
+                  description:
+                    description: Small description of the database service. Description
+                      of the cluster
+                    type: string
+                  diskSize:
+                    description: The disk size (in GB) of the database service. Disk
+                      size attributes of the cluster
+                    type: number
+                  diskType:
+                    description: Defines the disk type of the database service. Disk
+                      type attributes of the cluster
                     type: string
                   endpoints:
                     description: List of all endpoints objects of the service. List
@@ -349,9 +400,25 @@ spec:
                           type: string
                       type: object
                     type: array
+                  engine:
+                    description: The database engine you want to deploy. To get a
+                      full list of available engine visit. public documentation. Name
+                      of the engine of the service
+                    type: string
+                  flavor:
+                    description: 'A valid OVHcloud public cloud database flavor name
+                      in which the nodes will be started. Ex: "db1-7". Changing this
+                      value upgrade the nodes with the new flavor. You can find the
+                      list of flavor names: https://www.ovhcloud.com/fr/public-cloud/prices/
+                      The node flavor used for this cluster'
+                    type: string
                   id:
                     description: Public Cloud Database Service ID
                     type: string
+                  kafkaRestApi:
+                    description: Defines whether the REST API is enabled on a kafka
+                      cluster Defines whether the REST API is enabled on a Kafka cluster
+                    type: boolean
                   maintenanceTime:
                     description: Time on which maintenances can start every day. Time
                       on which maintenances can start every day
@@ -360,9 +427,48 @@ spec:
                     description: Type of network of the cluster. Type of network of
                       the cluster
                     type: string
+                  nodes:
+                    description: List of nodes object. Multi region cluster are not
+                      yet available, all node should be identical. List of nodes composing
+                      the service
+                    items:
+                      properties:
+                        networkId:
+                          description: Private network id in which the node should
+                            be deployed. It's the regional openstackId of the private
+                            network Private network ID in which the node is. It's
+                            the regional openstackId of the private network.
+                          type: string
+                        region:
+                          description: 'Public cloud region in which the node should
+                            be deployed. Ex: "GRA''. Region of the node'
+                          type: string
+                        subnetId:
+                          description: Private subnet ID in which the node is. Private
+                            subnet ID in which the node is
+                          type: string
+                      type: object
+                    type: array
+                  opensearchAclsEnabled:
+                    description: Defines whether the ACLs are enabled on an OpenSearch
+                      cluster Defines whether the ACLs are enabled on an Opensearch
+                      cluster
+                    type: boolean
+                  plan:
+                    description: 'Plan of the cluster. Enum: "essential", "business",
+                      "enterprise". Plan of the cluster'
+                    type: string
+                  serviceName:
+                    description: The id of the public cloud project. If omitted, the
+                      OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+                    type: string
                   status:
                     description: Current status of the cluster. Current status of
                       the cluster
+                    type: string
+                  version:
+                    description: The version of the engine in which the service should
+                      be deployed Version of the engine deployed on the cluster
                     type: string
                 type: object
               conditions:
@@ -406,9 +512,3 @@ spec:
     storage: true
     subresources:
       status: {}
-status:
-  acceptedNames:
-    kind: ""
-    plural: ""
-  conditions: []
-  storedVersions: []

@@ -10,6 +10,10 @@ import (
 	"path/filepath"
 	"time"
 
+	"gopkg.in/alecthomas/kingpin.v2"
+
+	"github.com/crossplane/crossplane-runtime/pkg/feature"
+
 	xpv1 "github.com/crossplane/crossplane-runtime/apis/common/v1"
 	xpcontroller "github.com/crossplane/crossplane-runtime/pkg/controller"
 	"github.com/crossplane/crossplane-runtime/pkg/logging"
@@ -17,7 +21,6 @@ import (
 	"github.com/crossplane/crossplane-runtime/pkg/resource"
 	tjcontroller "github.com/upbound/upjet/pkg/controller"
 	"github.com/upbound/upjet/pkg/terraform"
-	"gopkg.in/alecthomas/kingpin.v2"
 	kerrors "k8s.io/apimachinery/pkg/api/errors"
 	metav1 "k8s.io/apimachinery/pkg/apis/meta/v1"
 	"k8s.io/client-go/tools/leaderelection/resourcelock"
@@ -45,6 +48,7 @@ func main() {
 
 		namespace                  = app.Flag("namespace", "Namespace used to set as default scope in default secret store config.").Default("crossplane-system").Envar("POD_NAMESPACE").String()
 		enableExternalSecretStores = app.Flag("enable-external-secret-stores", "Enable support for ExternalSecretStores.").Default("false").Envar("ENABLE_EXTERNAL_SECRET_STORES").Bool()
+		enableManagementPolicies   = app.Flag("enable-management-policies", "Enable support for Management Policies.").Default("false").Envar("ENABLE_MANAGEMENT_POLICIES").Bool()
 	)
 
 	kingpin.MustParse(app.Parse(os.Args[1:]))
@@ -79,6 +83,7 @@ func main() {
 			GlobalRateLimiter:       ratelimiter.NewGlobal(*maxReconcileRate),
 			PollInterval:            1 * time.Minute,
 			MaxConcurrentReconciles: 1,
+			Features:                &feature.Flags{},
 		},
 		Provider: config.GetProvider(),
 		// use the following WorkspaceStoreOption to enable the shared gRPC mode
@@ -104,6 +109,11 @@ func main() {
 				},
 			},
 		})), "cannot create default store config")
+	}
+
+	if *enableManagementPolicies {
+		o.Features.Enable(features.EnableAlphaManagementPolicies)
+		log.Info("Alpha feature enabled", "flag", features.EnableAlphaManagementPolicies)
 	}
 
 	kingpin.FatalIfError(controller.Setup(mgr, o), "Cannot setup Ovh controllers")

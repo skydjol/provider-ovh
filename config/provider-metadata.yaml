@@ -1,713 +1,9 @@
 name: ovh/ovh
 resources:
-    OVH:
-        subCategory: ""
-        description: The OVH provider is used to interact with the many resources supported by OVHcloud. The provider needs to be configured with the proper credentials before it can be used.
-        name: OVH
-        title: OVH
-        argumentDocs:
-            OVH_CLOUD_PROJECT_DATABASE_ENGINE_TEST: '- The name of the database engine to test.'
-            OVH_CLOUD_PROJECT_DATABASE_FLAVOR_TEST: '- The node flavor of the database service to test.'
-            OVH_CLOUD_PROJECT_DATABASE_IP_RESTRICTION_IP_TEST: '- The IP restriction to test.'
-            OVH_CLOUD_PROJECT_DATABASE_KAFKA_VERSION_TEST: '- The version of the kafka to test. if not set OVH_CLOUD_PROJECT_DATABASE_VERSION_TEST is use.'
-            OVH_CLOUD_PROJECT_DATABASE_M3DB_VERSION_TEST: '- The version of the M3DB to test. if not set OVH_CLOUD_PROJECT_DATABASE_VERSION_TEST is use.'
-            OVH_CLOUD_PROJECT_DATABASE_MONGODB_VERSION_TEST: '- The version of the mongodb to test. if not set OVH_CLOUD_PROJECT_DATABASE_VERSION_TEST is use.'
-            OVH_CLOUD_PROJECT_DATABASE_OPENSEARCH_VERSION_TEST: '- The version of the opensearch to test. if not set OVH_CLOUD_PROJECT_DATABASE_VERSION_TEST is use.'
-            OVH_CLOUD_PROJECT_DATABASE_POSTGRESQL_VERSION_TEST: '- The version of the postgresql to test. if not set OVH_CLOUD_PROJECT_DATABASE_VERSION_TEST is use.'
-            OVH_CLOUD_PROJECT_DATABASE_REDIS_VERSION_TEST: '- The version of the redis to test. if not set OVH_CLOUD_PROJECT_DATABASE_VERSION_TEST is use.'
-            OVH_CLOUD_PROJECT_DATABASE_REGION_TEST: '- The region of the database service to test.'
-            OVH_CLOUD_PROJECT_DATABASE_VERSION_TEST: '- The version of the database engine to test.'
-            OVH_CLOUD_PROJECT_FAILOVER_IP_ROUTED_TO_1_TEST: '- The GUID of an instance to which failover IP addresses can be attached'
-            OVH_CLOUD_PROJECT_FAILOVER_IP_ROUTED_TO_2_TEST: '- The GUID of a secondary instance to which failover IP addresses can be attached. There must be 2 as associations can only be updated not removed. To test effectively, the failover ip address must be moved between instances'
-            OVH_CLOUD_PROJECT_FAILOVER_IP_TEST: '- The ip address of your public cloud failover ip.'
-            OVH_CLOUD_PROJECT_KUBE_REGION_TEST: '- The region of your public cloud kubernetes project.'
-            OVH_CLOUD_PROJECT_KUBE_VERSION_TEST: '- The version of your public cloud kubernetes project.'
-            OVH_CLOUD_PROJECT_SERVICE_TEST: '- The ID of your public cloud project.'
-            OVH_DBAAS_LOGS_SERVICE_TEST: '- The name of your Dbaas logs service.'
-            OVH_ENDPOINT: '- possible value are: ovh-eu, ovh-ca, ovh-us, soyoustart-eu, soyoustart-ca, kimsufi-ca, kimsufi-eu, runabove-ca'
-            OVH_IP_TEST: ', OVH_IP_BLOCK_TEST, OVH_IP_REVERSE_TEST - The values you have to set for testing ip reverse resources.'
-            OVH_IPLB_SERVICE_TEST: '- The ID of the IP Load Balancer to use'
-            OVH_TESTACC_IP: '- set this variable to "yes" will order public ip blocks.'
-            OVH_TESTACC_ORDER_CLOUDPROJECT: '- set this variable to "yes" will order cloud projects.'
-            OVH_TESTACC_ORDER_DOMAIN: '- set this variable to "mydomain.ovh" to run tests for domain zones.'
-            OVH_TESTACC_ORDER_IPLOADBALANCING: '- set this variable to "yes" will order ip loadbalancing.'
-            OVH_TESTACC_ORDER_VRACK: '- set this variable to "yes" will order vracks.'
-            OVH_VRACK_SERVICE_TEST: '- The ID of the vRack to use.'
-            OVH_ZONE_TEST: '- The domain you own to test the domain_zone resource.'
-            application_key: |-
-                - (Optional) The API Application Key. If omitted,
-                the OVH_APPLICATION_KEY environment variable is used.
-            application_secret: |-
-                - (Optional) The API Application Secret. If omitted,
-                the OVH_APPLICATION_SECRET environment variable is used.
-            consumer_key: |-
-                - (Optional) The API Consumer key. If omitted,
-                the OVH_CONSUMER_KEY environment variable is used.
-            endpoint: |-
-                - (Required) Specify which API endpoint to use.
-                It can be set using the OVH_ENDPOINT environment
-                variable. e.g. ovh-eu or ovh-ca.
-        importStatements: []
-    cloud_project_capabilities_containerregistry:
-        subCategory: ""
-        description: Get the list of container registry capabilities associated with a public cloud project.
-        name: cloud_project_capabilities_containerregistry
-        title: cloud_project_capabilities_containerregistry
-        argumentDocs:
-            code: '- Plan code from the catalog'
-            created_at: '- Plan creation date'
-            features: '- Features of the plan'
-            id: '- Plan ID'
-            image_storage: '- Docker image storage limits in bytes'
-            name: '- Plan name'
-            parallel_request: '- Parallel requests on Docker image API (/v2 Docker registry API)'
-            plans: '- Available plans in the region'
-            region_name: '- The region name'
-            registry_limits: '- Container registry limits'
-            result: '- List of container registry capability for a single region'
-            service_name: |-
-                - The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            updated_at: '- Plan last update date'
-            vulnerability: '- Vulnerability scanning'
-        importStatements: []
-    cloud_project_capabilities_containerregistry_filter:
-        subCategory: ""
-        description: Filter the list of container registry capabilities associated with a public cloud project to match one and only one capability.
-        name: cloud_project_capabilities_containerregistry_filter
-        title: cloud_project_capabilities_containerregistry_filter
-        argumentDocs:
-            code: '- Plan code from the catalog'
-            created_at: '- Plan creation date'
-            features: '- Features of the plan'
-            id: '- Plan ID'
-            image_storage: '- Docker image storage limits in bytes'
-            name: '- Plan name'
-            parallel_request: '- Parallel requests on Docker image API (/v2 Docker registry API)'
-            plan_name: '- The plan name. It can be ''SMALL'', ''MEDIUM'' or ''LARGE''.'
-            region: '- The region name'
-            registry_limits: '- Container registry limits'
-            service_name: |-
-                - The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            updated_at: '- Plan last update date'
-            vulnerability: '- Vulnerability scanning'
-        importStatements: []
-    cloud_project_containerregistries:
-        subCategory: ""
-        description: Get the list of container registries associated with a public cloud project.
-        name: cloud_project_containerregistries
-        title: cloud_project_containerregistries
-        argumentDocs:
-            created_at: '- Registry creation date'
-            id: '- Registry ID'
-            name: '- Registry name'
-            project_id: '- Project ID of your registry'
-            region: '- Region of the registry'
-            result: '- The list of container registries associated with the project.'
-            service_name: |-
-                - The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            size: '- Current size of the registry (bytes)'
-            status: '- Registry status'
-            updated_at: '- Registry last update date'
-            url: '- Access url of the registry'
-            version: '- Version of your registry'
-        importStatements: []
-    cloud_project_containerregistry:
-        subCategory: ""
-        description: Get information about a container registry associated with a public cloud project.
-        name: cloud_project_containerregistry
-        title: cloud_project_containerregistry
-        argumentDocs:
-            created_at: '- Registry creation date'
-            id: '- Registry ID'
-            name: '- Registry name'
-            project_id: '- Project ID of your registry'
-            region: '- Region of the registry'
-            registry_id: '- Registry ID'
-            service_name: |-
-                - The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            size: '- Current size of the registry (bytes)'
-            status: '- Registry status'
-            updated_at: '- Registry last update date'
-            url: '- Access url of the registry'
-            version: '- Version of your registry'
-        importStatements: []
-    cloud_project_containerregistry_users:
-        subCategory: ""
-        description: Get the list of users of a container registry associated with a public cloud project.
-        name: cloud_project_containerregistry_users
-        title: cloud_project_containerregistry_users
-        argumentDocs:
-            email: '- User email'
-            id: '- User ID'
-            registry_id: '- Registry ID'
-            result: '- The list of users of the container registry associated with the project.'
-            service_name: |-
-                - The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            user: '- User name'
-        importStatements: []
-    cloud_project_database:
-        subCategory: ""
-        description: Get information about a managed database cluster in a public cloud project.
-        name: cloud_project_database
-        title: cloud_project_database
-        argumentDocs:
-            backup_time: '- Time on which backups start every day.'
-            component: '- Type of component the URI relates to.'
-            created_at: '- Date of the creation of the cluster.'
-            description: '- Small description of the database service.'
-            domain: '- Domain of the cluster.'
-            endpoints: '- List of all endpoints objects of the service.'
-            engine: |-
-                - (Required) The database engine you want to get information. To get a full list of available engine visit:
-                public documentation.
-            flavor: '- A valid OVHcloud public cloud database flavor name in which the nodes will be started.'
-            id: '- (Required) Cluster ID'
-            kafka_rest_api: '- Defines whether the REST API is enabled on a kafka cluster.'
-            maintenance_time: '- Time on which maintenances can start every day.'
-            network_id: '- Private network id in which the node should be deployed. It''s the regional openstackId of the private network'
-            network_type: '- Type of network of the cluster.'
-            nodes: '- List of nodes object.'
-            path: '- Path of the endpoint.'
-            plan: '- Plan of the cluster.'
-            port: '- Connection port for the endpoint.'
-            region: '- Public cloud region in which the node should be deployed.'
-            scheme: '- Scheme used to generate the URI.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            ssl: '- Defines whether the endpoint uses SSL.'
-            ssl_mode: '- SSL mode used to connect to the service if the SSL is enabled.'
-            status: '- Current status of the cluster.'
-            subnet_id: '-  Private subnet ID in which the node is.'
-            uri: '- URI of the endpoint.'
-            version: '- The version of the engine in which the service should be deployed'
-        importStatements: []
-    cloud_project_database_capabilities:
-        subCategory: ""
-        description: Get information about capabilities of a public cloud project.
-        name: cloud_project_database_capabilities
-        title: cloud_project_database_capabilities
-        argumentDocs:
-            backup_retention: '- Automatic backup retention duration.'
-            core: '- Flavor core number.'
-            default_version: '- Default version used for the engine.'
-            description: '- Description of the engine.'
-            engines: '- Database engines available.'
-            flavors: '- Flavors available.'
-            memory: '- Flavor ram size in GB.'
-            name: '- Engine name.'
-            options: '- Options available.'
-            plans: '- Plans available.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            ssl_modes: '- SSL modes for this engine.'
-            storage: '- Flavor disk size in GB.'
-            type: '- Type of the option.'
-            versions: '- Versions available for this engine.'
-        importStatements: []
-    cloud_project_database_certificates:
-        subCategory: ""
-        description: Get information about certificates of a cluster associated with a public cloud project.
-        name: cloud_project_database_certificates
-        title: cloud_project_database_certificates
-        argumentDocs:
-            ca: '- CA certificate used for the service.'
-            cluster_id: '- (Required) Cluster ID'
-            engine: |-
-                - (Required) The engine of the database cluster you want database information. To get a full list of available engine visit:
-                public documentation.
-                Available engines:
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_database:
-        subCategory: ""
-        description: Get information about a database of a database cluster associated with a public cloud project.
-        name: cloud_project_database_database
-        title: cloud_project_database_database
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            created_at: '- Date of the creation of the database.'
-            default: '- Defines if the database has been created by default.'
-            engine: |-
-                - (Required) The engine of the database cluster you want database information. To get a full list of available engine visit:
-                public documentation.
-                Available engines:
-            id: '- ID of the database.'
-            name: '- (Required) Name of the database.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_databases:
-        subCategory: ""
-        description: Get the list of databases of a database cluster associated with a public cloud project.
-        name: cloud_project_database_databases
-        title: cloud_project_database_databases
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            database_ids: '- The list of databases ids of the database cluster associated with the project.'
-            engine: |-
-                - (Required) The engine of the database cluster you want to list databases. To get a full list of available engine visit:
-                public documentation.
-                Available engines:
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_integration:
-        subCategory: ""
-        description: Get information about an integration of a database cluster associated with a public cloud project.
-        name: cloud_project_database_integration
-        title: cloud_project_database_integration
-        argumentDocs:
-            cluster_id: '- (Required, Forces new resource) Cluster ID.'
-            destination_service_id: '- ID of the destination service.'
-            engine: |-
-                - (Required, Forces new resource) The engine of the database cluster you want to add. You can find the complete list of available engine in the public documentation.
-                All engines available exept mongodb
-            id: '- (Required) Integration ID'
-            parameters: '- Parameters for the integration.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            source_service_id: '- ID of the source service.'
-            status: '- Current status of the integration.'
-            type: '- Type of the integration.'
-        importStatements: []
-    cloud_project_database_integrations:
-        subCategory: ""
-        description: Get the list of integrations of a database cluster associated with a public cloud project.
-        name: cloud_project_database_integrations
-        title: cloud_project_database_integrations
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            engine: |-
-                - (Required) The engine of the database cluster you want to list integrations. To get a full list of available engine visit:
-                public documentation.
-                All engines available exept mongodb
-            integration_ids: '- The list of integrations ids of the database cluster associated with the project.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_ip_restrictions:
-        subCategory: ""
-        description: Get the list of IP restrictions associated with a public cloud project.
-        name: cloud_project_database_ip_restrictions
-        title: cloud_project_database_ip_restrictions
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            engine: |-
-                - (Required) The engine of the database cluster you want to list IP restrictions. To get a full list of available engine visit:
-                public documentation.
-            ips: '- The list of IP restriction of the database associated with the project.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_kafka_acl:
-        subCategory: ""
-        description: Get information about an ACL of a kafka cluster associated with a public cloud project.
-        name: cloud_project_database_kafka_acl
-        title: cloud_project_database_kafka_acl
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            id: '- (Required) ACL ID'
-            permission: '- Permission to give to this username on this topic.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            topic: '- Topic affected by this ACL.'
-            username: '- Username affected by this ACL.'
-        importStatements: []
-    cloud_project_database_kafka_acls:
-        subCategory: ""
-        description: Get the list of ACLS of a kafka cluster associated with a public cloud project.
-        name: cloud_project_database_kafka_acls
-        title: cloud_project_database_kafka_acls
-        argumentDocs:
-            acl_ids: '- The list of ACLs ids of the kafka cluster associated with the project.'
-            cluster_id: '- (Required) Cluster ID'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_kafka_topic:
-        subCategory: ""
-        description: Get information about a topic of a kafka cluster associated with a public cloud project.
-        name: cloud_project_database_kafka_topic
-        title: cloud_project_database_kafka_topic
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            id: '- (Required) Topic ID'
-            min_insync_replicas: '- Minimum insync replica accepted for this topic.'
-            name: '- Name of the topic.'
-            partitions: '- Number of partitions for this topic.'
-            replication: '- Number of replication for this topic.'
-            retention_bytes: '- Number of bytes for the retention of the data for this topic. Inferior to 0 mean Unlimited'
-            retention_hours: '- Number of hours for the retention of the data for this topic. Inferior to 0 mean Unlimited'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_kafka_topics:
-        subCategory: ""
-        description: Get the list of topics of a kafka cluster associated with a public cloud project.
-        name: cloud_project_database_kafka_topics
-        title: cloud_project_database_kafka_topics
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            topic_ids: '- The list of topics ids of the kafka cluster associated with the project.'
-        importStatements: []
-    cloud_project_database_kafka_user_acces:
-        subCategory: ""
-        description: Get information about user acces of a kafka cluster associated with a public cloud project.
-        name: cloud_project_database_kafka_user_acces
-        title: cloud_project_database_kafka_user_acces
-        argumentDocs:
-            cert: '- User cert.'
-            cluster_id: '- (Required) Cluster ID'
-            key: '- (Sensitive) User key for the cert.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            user_id: '- (Required) User ID'
-        importStatements: []
-    cloud_project_database_m3db_namespace:
-        subCategory: ""
-        description: Get information about a namespace of a M3DB cluster associated with a public cloud project.
-        name: cloud_project_database_m3db_namespace
-        title: cloud_project_database_m3db_namespace
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            id: '- ID of the namespace.'
-            name: '- (Required, Forces new resource) Name of the namespace.'
-            resolution: '- Resolution for an aggregated namespace.'
-            retention_block_data_expiration_duration: '- Controls how long we wait before expiring stale data.'
-            retention_block_size_duration: '- Controls how long to keep a block in memory before flushing to a fileset on disk.'
-            retention_buffer_future_duration: '- Controls how far into the future writes to the namespace will be accepted.'
-            retention_buffer_past_duration: '- Controls how far into the past writes to the namespace will be accepted.'
-            retention_period_duration: '- Controls the duration of time that M3DB will retain data for the namespace.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            snapshot_enabled: '- SDefines whether M3db will create snapshot files for this namespace.'
-            type: '- Type of namespace.'
-            writes_to_commit_log_enabled: '- Defines whether M3DB will include writes to this namespace in the commit log.'
-        importStatements: []
-    cloud_project_database_m3db_namespaces:
-        subCategory: ""
-        description: Get the list of namespaces of a M3DB cluster associated with a public cloud project.
-        name: cloud_project_database_m3db_namespaces
-        title: cloud_project_database_m3db_namespaces
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            namespace_ids: '- The list of namespaces ids of the M3DB cluster associated with the project.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_m3db_user:
-        subCategory: ""
-        description: Get information about a user of a M3DB cluster associated with a public cloud project.
-        name: cloud_project_database_m3db_user
-        title: cloud_project_database_m3db_user
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            created_at: '- Date of the creation of the user.'
-            group: '- See Argument Reference above.'
-            id: '- ID of the user.'
-            name: '- (Required, Forces new resource) Name of the user.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            status: '- Current status of the user.'
-        importStatements: []
-    cloud_project_database_mongodb_user:
-        subCategory: ""
-        description: Get information about a user of a mongodb cluster associated with a public cloud project.
-        name: cloud_project_database_mongodb_user
-        title: cloud_project_database_mongodb_user
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            created_at: '- Date of the creation of the user.'
-            id: '- ID of the user.'
-            name: '- (Required) Name of the user with the authentication database in the format name@authDB, for example: johndoe@admin'
-            roles: '- Roles the user belongs to'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            status: '- Current status of the user.'
-        importStatements: []
-    cloud_project_database_opensearch_pattern:
-        subCategory: ""
-        description: Get information about a pattern of a opensearch cluster associated with a public cloud project.
-        name: cloud_project_database_opensearch_pattern
-        title: cloud_project_database_opensearch_pattern
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            id: '- (Required) Pattern ID.'
-            max_index_count: '- Maximum number of index for this pattern.'
-            pattern: '- Pattern format.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_opensearch_patterns:
-        subCategory: ""
-        description: Get the list of patterns of a opensearch cluster associated with a public cloud project.
-        name: cloud_project_database_opensearch_patterns
-        title: cloud_project_database_opensearch_patterns
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            pattern_ids: '- The list of patterns ids of the opensearch cluster associated with the project.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_database_opensearch_user:
-        subCategory: ""
-        description: Get information about a user of a opensearch cluster associated with a public cloud project.
-        name: cloud_project_database_opensearch_user
-        title: cloud_project_database_opensearch_user
-        argumentDocs:
-            acls: '- Acls of the user.'
-            cluster_id: '- (Required) Cluster ID'
-            created_at: '- Date of the creation of the user.'
-            id: '- ID of the user.'
-            name: '- (Required) Name of the user.'
-            pattern: '- Pattern of the ACL.'
-            permission: '- Permission of the ACL.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            status: '- Current status of the user.'
-        importStatements: []
-    cloud_project_database_postgresql_user:
-        subCategory: ""
-        description: Get information about a user of a postgresql cluster associated with a public cloud project.
-        name: cloud_project_database_postgresql_user
-        title: cloud_project_database_postgresql_user
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            created_at: '- Date of the creation of the user.'
-            id: '- ID of the user.'
-            name: '- (Required) Name of the user.'
-            roles: '- Roles the user belongs to.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            status: '- Current status of the user.'
-        importStatements: []
-    cloud_project_database_redis_user:
-        subCategory: ""
-        description: Get information about a user of a redis cluster associated with a public cloud project.
-        name: cloud_project_database_redis_user
-        title: cloud_project_database_redis_user
-        argumentDocs:
-            categories: '- Categories of the user.'
-            channels: '- Channels of the user.'
-            cluster_id: '- (Required) Cluster ID'
-            commands: '- Commands of the user.'
-            created_at: '- Date of the creation of the user.'
-            id: '- ID of the user.'
-            keys: '- Keys of the user.'
-            name: '- (Required) Name of the user'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            status: '- Current status of the user.'
-        importStatements: []
-    cloud_project_database_user:
-        subCategory: ""
-        description: Get information about a user of a database cluster associated with a public cloud project.
-        name: cloud_project_database_user
-        title: cloud_project_database_user
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            created_at: '- Date of the creation of the user.'
-            engine: |-
-                - (Required) The engine of the database cluster you want user information. To get a full list of available engine visit :
-                public documentation.
-                Available engines:
-            id: '- ID of the user.'
-            name: '- (Required) Name of the user.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            status: '- Current status of the user.'
-        importStatements: []
-    cloud_project_database_users:
-        subCategory: ""
-        description: Get the list of users of a database cluster associated with a public cloud project.
-        name: cloud_project_database_users
-        title: cloud_project_database_users
-        argumentDocs:
-            cluster_id: '- (Required) Cluster ID'
-            engine: |-
-                - (Required) The engine of the database cluster you want to list users. To get a full list of available engine visit:
-                public documentation.
-                Available engines:
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            user_ids: '- The list of users ids of the database cluster associated with the project.'
-        importStatements: []
-    cloud_project_databases:
-        subCategory: ""
-        description: Get the list of managed database cluster associated with a public cloud project.
-        name: cloud_project_databases
-        title: cloud_project_databases
-        argumentDocs:
-            cluster_ids: '- The list of managed databases ids of the project.'
-            engine: |-
-                - (Required) The database engine you want to list. To get a full list of available engine visit:
-                public documentation.
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_failover_ip_attach:
-        subCategory: ""
-        description: Reads failover ip addresses for a service
-        name: cloud_project_failover_ip_attach
-        title: cloud_project_failover_ip_attach
-        argumentDocs:
-            block: '- The IP block'
-            continentCode: '- The Ip continent'
-            geoloc: '- The Ip location'
-            id: '- The Ip id'
-            ip: '- The failover ip address to query'
-            progress: '- Current operation progress in percent'
-            routedTo: '- Instance where ip is routed to'
-            service_name: |-
-                - The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            status: '- Ip status, can be ok or operationPending'
-            subType: '- IP sub type, can be cloud or ovh'
-        importStatements: []
-    cloud_project_kube:
-        subCategory: ""
-        description: Get information & status of a Kubernetes managed cluster in a public cloud project.
-        name: cloud_project_kube
-        title: cloud_project_kube
-        argumentDocs:
-            control_plane_is_up_to_date: '- True if control-plane is up to date.'
-            customization: '- Customer customization object'
-            is_up_to_date: '- True if all nodes and control-plane are up to date.'
-            kube_id: '- The id of the managed kubernetes cluster.'
-            name: '- The name of the managed kubernetes cluster.'
-            next_upgrade_versions: '- Kubernetes versions available for upgrade.'
-            nodes_url: '- Cluster nodes URL.'
-            private_network_id: '- OpenStack private network (or vrack) ID to use.'
-            region: '- The OVHcloud public cloud region ID of the managed kubernetes cluster.'
-            service_name: |-
-                - (Optional) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            status: '- Cluster status. Should be normally set to ''READY''.'
-            update_policy: '- Cluster update policy. Choose between [ALWAYS_UPDATE,MINIMAL_DOWNTIME,NEVER_UPDATE]''.'
-            url: '- Management URL of your cluster.'
-            version: '- Kubernetes version of the managed kubernetes cluster.'
-        importStatements: []
-    cloud_project_kube_iprestrictions:
-        subCategory: ""
-        description: Get information & status of a Kubernetes managed cluster IP restrictions in a public cloud project.
-        name: cloud_project_kube_iprestrictions
-        title: cloud_project_kube_iprestrictions
-        argumentDocs:
-            ips: '- The list of CIDRs that restricts the access to the API server.'
-            kube_id: '- The id of the managed kubernetes cluster.'
-            service_name: |-
-                - (Optional) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
-    cloud_project_kube_nodepool:
-        subCategory: ""
-        description: Get information & status of a Kubernetes managed node pool in a public cloud project.
-        name: cloud_project_kube_nodepool
-        title: cloud_project_kube_nodepool
-        argumentDocs:
-            anti_affinity: '- (Optional) should the pool use the anti-affinity feature. Default to false.'
-            autoscale: '- (Optional) Enable auto-scaling for the pool. Default to false.'
-            available_nodes: '- Number of nodes which are actually ready in the pool'
-            created_at: '- Creation date'
-            current_nodes: '- Number of nodes present in the pool'
-            desired_nodes: '- number of nodes to start.'
-            flavor: '- Flavor name'
-            flavor_name: |-
-                - a valid OVHcloud public cloud flavor ID in which the nodes will be started.
-                Ex: "b2-7". Changing this value recreates the resource.
-                You can find the list of flavor IDs: https://www.ovhcloud.com/fr/public-cloud/prices/
-            kube_id: '- The id of the managed kubernetes cluster.'
-            max_nodes: |-
-                - maximum number of nodes allowed in the pool.
-                Setting desired_nodes over this value will raise an error.
-            min_nodes: |-
-                - minimum number of nodes allowed in the pool.
-                Setting desired_nodes under this value will raise an error.
-            monthly_billed: '- (Optional) should the nodes be billed on a monthly basis. Default to false.'
-            name: '- The name of the node pool.'
-            project_id: '- Project id'
-            service_name: |-
-                - (Optional) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            size_status: '- Status describing the state between number of nodes wanted and available ones'
-            status: '- Current status'
-            up_to_date_nodes: '- Number of nodes with the latest version installed in the pool'
-            updated_at: '- Last update date'
-        importStatements: []
-    cloud_project_region:
-        subCategory: ""
-        description: Get information & status of a region associated with a public cloud project.
-        name: cloud_project_region
-        title: cloud_project_region
-        argumentDocs:
-            continent_code: |-
-                - the code of the geographic continent the region is running.
-                E.g.: EU for Europe, US for America...
-            datacenter_location: |-
-                - The location code of the datacenter.
-                E.g.: "GRA", meaning Gravelines, for region "GRA1"
-            name: |-
-                - (Required) The name of the region associated with the public cloud
-                project.
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            services: '- The list of public cloud services running within the region'
-            status: '- the status of the service'
-        importStatements: []
-    cloud_project_regions:
-        subCategory: ""
-        description: Get the list of regions associated with a public cloud project.
-        name: cloud_project_regions
-        title: cloud_project_regions
-        argumentDocs:
-            has_services_up: |-
-                - (Optional) List of services which has to be UP in regions.
-                Example: "image", "instance", "network", "storage", "volume", "workflow", ...
-                If left blank, returns all regions associated with the service_name.
-            names: '- The list of regions associated with the project, filtered by services UP.'
-            service_name: |-
-                - (Required) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-        importStatements: []
     cloud_project_user_s3_credential:
         subCategory: ""
-        description: Get the Secret Access Key of an Access Key ID of a public cloud project's user.
         name: cloud_project_user_s3_credential
-        title: cloud_project_user_s3_credential
+        title: ""
         argumentDocs:
             access_key_id: '- the Access Key ID'
             secret_access_key: '- (Sensitive) the Secret Access Key'
@@ -716,610 +12,46 @@ resources:
                 the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
             user_id: '- (Required) The ID of a public cloud project''s user.'
         importStatements: []
-    cloud_project_user_s3_credentials:
+    dbaas_logs_graylog_output_stream:
         subCategory: ""
-        description: Get the list of Access Key ID of a public cloud project's user.
-        name: cloud_project_user_s3_credentials
-        title: cloud_project_user_s3_credentials
+        name: dbaas_logs_graylog_output_stream
+        title: ""
         argumentDocs:
-            access_key_ids: '- The list of the Access Key ID associated with this user.'
-            service_name: |-
-                - (Required) The ID of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            user_id: '- (Required) The ID of a public cloud project''s user.'
-        importStatements: []
-    cloud_region:
-        subCategory: ""
-        description: Get information & status of a dedicated CEPH instance.
-        name: cloud_region
-        title: cloud_region
-        argumentDocs:
-            ceph_mons: '- list of CEPH monitors IPs'
-            ceph_version: '- CEPH cluster version'
-            crush_tunables: '- CRUSH algorithm settings. Possible values'
-            label: '- CEPH cluster label'
-            region: '- cluster region'
-            service_name: '- (Required) The service name of the dedicated CEPH cluster.'
-            size: '- Cluster size in TB'
-            state: '- the state of the cluster'
-            status: '- the status of the service'
-        importStatements: []
-    dbaas_logs_input_engine:
-        subCategory: ""
-        description: Get information & status of a DBaas logs input engine.
-        name: dbaas_logs_input_engine
-        title: dbaas_logs_input_engine
-        argumentDocs:
-            is_deprecated: '- Indicates if engine will soon not be supported.'
-            name: '- The name of the logs input engine.'
-            version: '- Software version'
-        importStatements: []
-    dbaas_logs_output_graylog_stream:
-        subCategory: ""
-        description: Get information & status of a DBaas logs output graylog stream.
-        name: dbaas_logs_output_graylog_stream
-        title: dbaas_logs_output_graylog_stream
-        argumentDocs:
-            cold_storage_compression: '- Cold storage compression method'
-            cold_storage_content: '- ColdStorage content'
+            can_alert: '- Indicates if the current user can create alert on the stream'
+            cold_storage_compression: '- Cold storage compression method. One of "LZMA", "GZIP", "DEFLATED", "ZSTD"'
+            cold_storage_content: '- ColdStorage content. One of "ALL", "GLEF", "PLAIN"'
             cold_storage_enabled: '- Is Cold storage enabled?'
             cold_storage_notify_enabled: '- Notify on new Cold storage archive'
             cold_storage_retention: '- Cold storage retention in year'
-            cold_storage_target: '- ColdStorage destination'
+            cold_storage_target: '- ColdStorage destination. One of "PCA", "PCS"'
             created_at: '- Stream creation'
-            description: '- Stream description'
+            description: '- (Required) Stream description'
             indexing_enabled: '- Enable ES indexing'
             indexing_max_size: '- Maximum indexing size (in GB)'
             indexing_notify_enabled: '- If set, notify when size is near 80, 90 or 100 % of the maximum configured setting'
             is_editable: '- Indicates if you are allowed to edit entry'
             is_shareable: '- Indicates if you are allowed to share entry'
             nb_alert_condition: '- Number of alert condition'
-            nb_archive: '- Number of coldstored archives'
+            nb_archive: '- Number of coldstored archivesr'
             parent_stream_id: '- Parent stream ID'
             pause_indexing_on_max_size: '- If set, pause indexing when maximum size is reach'
             retention_id: '- Retention ID'
-            service_name: '- The service name'
+            service_name: '- (Required) The service name'
             stream_id: '- Stream ID'
-            title: '- Stream description'
-            updated_at: '- Stream last update'
+            title: '- (Required) Stream description'
+            updated_at: '- Stream last updater'
             web_socket_enabled: '- Enable Websocket'
-        importStatements: []
-    dedicated_installation_templates:
-        subCategory: ""
-        description: Get the list of installation templates available for dedicated servers.
-        name: dedicated_installation_templates
-        title: dedicated_installation_templates
-        argumentDocs:
-            result: '- The list of installation templates IDs available for dedicated servers.'
-        importStatements: []
-    dedicated_server:
-        subCategory: ""
-        description: Get information of a dedicated server associated with your OVHcloud Account.
-        name: dedicated_server
-        title: dedicated_server
-        argumentDocs:
-            boot_id: '- boot id of the server'
-            commercial_range: '- dedicater server commercial range'
-            datacenter: '- dedicated datacenter localisation (bhs1,bhs2,...)'
-            enabled: '- VirtualNetworkInterface activation state'
-            enabled_public_vnis: '- List of enabled public VNI uuids'
-            enabled_vrack_aggregation_vnis: '- List of enabled vrack_aggregation VNI uuids'
-            enabled_vrack_vnis: '- List of enabled vrack VNI uuids'
-            ip: '- dedicated server ip (IPv4)'
-            ips: '- dedicated server ip blocks'
-            link_speed: '- link speed of the server'
-            mode: '- VirtualNetworkInterface mode (public,vrack,vrack_aggregation)'
-            monitoring: '- Icmp monitoring state'
-            name: '- dedicated server name'
-            ncis: '- NetworkInterfaceControllers bound to this VirtualNetworkInterface'
-            os: '- Operating system'
-            professional_use: '- Does this server have professional use option'
-            rack: '- rack id of the server'
-            rescue_mail: '- rescue mail of the server'
-            reverse: '- dedicated server reverse'
-            root_device: '- root device of the server'
-            server_id: '- your server id'
-            server_name: '- Server bound to this VirtualNetworkInterface'
-            service_name: '- (Required) The service_name of your dedicated server.'
-            state: '- error, hacked, hackedBlocked, ok'
-            support_level: '- Dedicated server support level (critical, fastpath, gs, pro)'
-            uuid: '- VirtualNetworkInterface unique id'
-            vnis: '- the list of Virtualnetworkinterface assiociated with this server'
-            vrack: '- vRack name'
-        importStatements: []
-    dedicated_server_boots:
-        subCategory: ""
-        description: Get the list of compatible netboots for a dedicated server associated with your OVHcloud Account.
-        name: dedicated_server_boots
-        title: dedicated_server_boots
-        argumentDocs:
-            boot_type: '- (Optional) Filter the value of bootType property (harddisk, rescue, ipxeCustomerScript, internal, network)'
-            result: '- The list of dedicated server netboots.'
-            service_name: '- (Required) The internal name of your dedicated server.'
-        importStatements: []
-    dedicated_servers:
-        subCategory: ""
-        description: Get the list of dedicated servers associated with your OVHcloud Account.
-        name: dedicated_servers
-        title: dedicated_servers
-        argumentDocs:
-            result: '- The list of dedicated servers IDs associated with your OVHcloud Account.'
-        importStatements: []
-    domain_zone:
-        subCategory: ""
-        description: Get information & status of a domain zone.
-        name: domain_zone
-        title: domain_zone
-        argumentDocs:
-            dnssec_supported: '- Is DNSSEC supported by this zone'
-            has_dns_anycast: '- hasDnsAnycast flag of the DNS zone'
-            last_update: '- Last update date of the DNS zone'
-            name: '- (Required) The name of the domain zone.'
-            name_servers: '- Name servers that host the DNS zone'
-        importStatements: []
-    ip_service:
-        subCategory: ""
-        description: Get information & status of a ip service.
-        name: ip_service
-        title: ip_service
-        argumentDocs:
-            id.can_be_terminated: '- can be terminated'
-            id.country: '- country'
-            id.description: '- Custom description on your ip'
-            id.ip: '- ip block'
-            id.organisation_id: '- IP block organisation Id'
-            id.routed_to: '- Routage information'
-            id.type: '- Possible values for ip type (    "cdn", "cloud", "dedicated", "failover", "hosted_ssl", "housing", "loadBalancing", "mail", "overthebox", "pcc", "pci", "private", "vpn", "vps", "vrack", "xdsl")'
-            service_name: '- The service name'
-        importStatements: []
-    iploadbalancing:
-        subCategory: ""
-        description: Get information & status of an IP Load Balancing product.
-        name: iploadbalancing
-        title: iploadbalancing
-        argumentDocs:
-            display_name: '- the name displayed in ManagerV6 for your iplb (max 50 chars)'
-            ip_loadbalancing: '- Your IP load balancing'
-            ipv4: '- The IPV4 associated to your IP load balancing'
-            ipv6: '- The IPV6 associated to your IP load balancing'
-            metrics_token: |-
-                - The metrics token associated with your IP load balancing
-                This attribute is sensitive.
-            name: '- The zone three letter code'
-            offer: '- The offer of your IP load balancing'
-            orderable_zone: '- Available additional zone for your Load Balancer'
-            plan_code: '- The billing planCode for this zone'
-            service_name: '- The internal name of your IP load balancing'
-            ssl_configuration: |-
-                - Modern oldest compatible clients : Firefox 27, Chrome 30,
-                IE 11 on Windows 7, Edge, Opera 17, Safari 9, Android 5.0, and Java 8.
-                Intermediate oldest compatible clients : Firefox 1, Chrome 1, IE 7, Opera 5,
-                Safari 1, Windows XP IE8, Android 2.3, Java 7.
-                Can take any of the following value: "intermediate", "modern"
-            state: |-
-                - Current state of your IP. Can take any of the following value:
-                "blacklisted", "deleted", "free", "ok", "quarantined", "suspended"
-            vrack_eligibility: '- Vrack eligibility. Takes a boolean value.'
-            vrack_name: |-
-                - Name of the vRack on which the current Load Balancer is
-                attached to, as it is named on vRack product
-            zone: '- Location where your service is. This takes an array of values.'
-        importStatements: []
-    iploadbalancing_http_farm:
-        subCategory: ""
-        description: Creates a backend server group (farm).
-        name: iploadbalancing_http_farm
-        title: iploadbalancing_http_farm
-        argumentDocs:
-            balance: '- Load balancing algorithm. roundrobin if null (first, leastconn, roundrobin, source)'
-            display_name: '- Readable label for loadbalancer farm'
-            force_ssl: '- Force use of SSL (TLS)'
-            interval: '- probe interval, Value between 30 and 3600 seconds, default 30'
-            match: '- What to match pattern against (contains, default, internal, matches, status)'
-            method: '- HTTP probe method (GET, HEAD, OPTIONS, internal)'
-            negate: '- Negate probe result'
-            pattern: '- Pattern to match against match'
-            port: '- Port attached to your farm ([1..49151]). Inherited from frontend if null'
-            probe: '- define a backend healthcheck probe'
-            service_name: '- (Required) The internal name of your IP load balancing'
-            stickiness: "- \tStickiness type. No stickiness if null (sourceIp, cookie)"
-            type: '- (Required) Valid values : http, internal, mysql, oco, pgsql, smtp, tcp'
-            url: '- URL for HTTP probe type.'
-            vrack_network_id: '- Internal Load Balancer identifier of the vRack private network to attach to your farm, mandatory when your Load Balancer is attached to a vRack'
-            zone: '- (Required) Zone where the farm will be defined (ie. GRA, BHS also supports ALL)'
-        importStatements: []
-    iploadbalancing_http_farm_server:
-        subCategory: ""
-        description: Creates a backend server entry linked to farm.
-        name: iploadbalancing_http_farm_server
-        title: iploadbalancing_http_farm_server
-        argumentDocs:
-            address: '- Address of the backend server (IP from either internal or OVHcloud network)'
-            backup: '- is it a backup server used in case of failure of all the non-backup backends'
-            cookie: '- Value of the stickiness cookie used for this backend.'
-            display_name: '- Label for the server'
-            farm_id: '- ID of the farm this server is attached to'
-            port: '- Port that backend will respond on'
-            probe: '- defines if backend will be probed to determine health and keep as active in farm if healthy'
-            proxy_protocol_version: '- version of the PROXY protocol used to pass origin connection information from loadbalancer to receiving service (v1, v2, v2-ssl, v2-ssl-cn)'
-            service_name: '- (Required) The internal name of your IP load balancing'
-            ssl: '- is the connection ciphered with SSL (TLS)'
-            status: '- backend status - active or inactive'
-            weight: '- used in loadbalancing algorithm'
-        importStatements: []
-    iploadbalancing_http_frontend:
-        subCategory: ""
-        description: Creates a frontend for an IP Load balancing service.
-        name: iploadbalancing_http_frontend
-        title: iploadbalancing_http_frontend
-        argumentDocs:
-            allowed_source: '- Restrict IP Load Balancing access to these ip block. No restriction if null. List of IP blocks.'
-            dedicated_ipfo: '- Only attach frontend on these ip. No restriction if null. List of Ip blocks.'
-            default_farm_id: '- Default TCP Farm of your frontend'
-            default_ssl_id: '- Default ssl served to your customer'
-            disabled: '- Disable your frontend. Default: ''false'''
-            display_name: '- Human readable name for your frontend, this field is for you'
-            id: '- Id of your frontend'
-            port: |-
-                - Port(s) attached to your frontend. Supports single port (numerical value),
-                range (2 dash-delimited increasing ports) and comma-separated list of 'single port'
-                and/or 'range'. Each port must be in the [1;49151] range
-            redirect_location: '- Redirection HTTP'''
-            service_name: '- (Required) The internal name of your IP load balancing'
-            ssl: '- SSL deciphering. Default: ''false'''
-            zone: '- (Required) Zone where the frontend will be defined (ie. gra, bhs also supports all)'
-        importStatements: []
-    me:
-        subCategory: ""
-        description: Get information about the current OVHcloud account
-        name: me
-        title: me
-        argumentDocs:
-            address: ': Postal address of the account'
-            area: ': Area of the account'
-            birth_city: ': City of birth'
-            birth_day: ': Birth date'
-            city: ': City of the account'
-            code: ': Currency code used by this account (e.g EUR, USD, ...)'
-            company_national_identification_number: ': This is the national identification number of the company that possess this account'
-            corporation_type: ': Type of corporation'
-            country: ': Country of the account'
-            currency: ':'
-            customer_code: ': The customer code of this account (a numerical value used for identification when contacting support via phone call)'
-            email: ': Email address'
-            fax: ': Fax number'
-            firstname: ': First name'
-            italian_sdi: ': Italian SDI'
-            language: ': Preferred language for this account'
-            legalform: ': Legal form of the account'
-            name: ': Name of the account holder'
-            national_identification_number: ': National Identification Number of this account'
-            nichandle: ': Nic handle / customer identifier'
-            organisation: ': Name of the organisation for this account'
-            ovh_company: ': OVHcloud subsidiary'
-            ovh_subsidiary: ': OVHcloud subsidiary'
-            phone: ': Phone number'
-            phone_country: ': Country code of the phone number'
-            sex: ': Gender of the account holder'
-            spare_email: ': Backup email address'
-            state: ': State of the postal address'
-            symbol: ': Currency symbol used by this account (e.g €, $, ...)'
-            vat: ': VAT number'
-            zip: ': Zipcode of the address'
-        importStatements: []
-    me_identity_user:
-        subCategory: ""
-        description: Get information about identity User.
-        name: me_identity_user
-        title: me_identity_user
-        argumentDocs:
-            creation: '- Creation date of this user.'
-            description: '- User description.'
-            email: '- User''s email.'
-            group: '- User''s group.'
-            last_update: '- Last update of this user.'
-            login: '- User''s login suffix.'
-            password_last_update: '- When the user changed his password for the last time.'
-            status: '- Current user''s status.'
-            user: '- (Required) User''s login.'
-        importStatements: []
-    me_identity_users:
-        subCategory: ""
-        description: Get the list of the identity users for the account.
-        name: me_identity_users
-        title: me_identity_users
-        argumentDocs:
-            users: '- The list of the user''s logins of all the identity users.'
-        importStatements: []
-    me_installation_template:
-        subCategory: ""
-        description: Get a custom installation template available for dedicated servers.
-        name: me_installation_template
-        title: me_installation_template
-        argumentDocs:
-            available_languages: ': List of all language available for this template.'
-            beta: ': This distribution is new and, although tested and functional, may still display odd behaviour.'
-            bit_format: ': This template bit format (32 or 64).'
-            category: ': Category of this template (informative only). (basic, customer, hosting, other, readyToUse, virtualisation).'
-            change_log: ': (DEPRECATED) Template change log details.'
-            custom_hostname: ': Set up the server using the provided hostname instead of the default hostname.'
-            customization: ':'
-            default_language: ': The default language of this template.'
-            deprecated: ': is this distribution deprecated.'
-            description: ': information about this template.'
-            disks: ': Disk List. Syntax is cX:dY for disks and [cX:dY,cX:dY] for groups. With X and Y resp. the controller id and the disk id.'
-            distribution: ': the distribution this template is based on.'
-            family: ': this template family type (bsd,linux,solaris,windows).'
-            filesystem: ': Partition filesystem.'
-            filesystems: ': Filesystems available (btrfs,ext3,ext4,ntfs,reiserfs,swap,ufs,xfs,zfs).'
-            hard_raid_configuration: ': This distribution supports hardware raid configuration through the OVHcloud API.'
-            hardware_raid: ':'
-            last_modification: ': Date of last modification of the base image.'
-            mode: ': RAID mode (raid0, raid1, raid10, raid5, raid50, raid6, raid60).'
-            mountpoint: ': partition mount point.'
-            name: ': name of this partitioning scheme.'
-            order: ': step or order. specifies the creation order of the partition on the disk'
-            partition: ':'
-            partition_scheme: ':'
-            post_installation_script_link: ': Indicate the URL where your postinstall customisation script is located.'
-            post_installation_script_return: ': indicate the string returned by your postinstall customisation script on successful execution. Advice: your script should return a unique validation string in case of succes. A good example is ''loh1Xee7eo OK OK OK UGh8Ang1Gu''.'
-            priority: ': on a reinstall, if a partitioning scheme is not specified, the one with the higher priority will be used by default, among all the compatible partitioning schemes (given the underlying hardware specifications).'
-            raid: ': raid partition type.'
-            rating: ': (DEPRECATED) Rating.'
-            size: ': size of partition in MB, 0 => rest of the space.'
-            ssh_key_name: ': Name of the ssh key that should be installed. Password login will be disabled.'
-            step: ': Specifies the creation order of the hardware RAID.'
-            supports_distribution_kernel: ': This distribution supports installation using the distribution''s native kernel instead of the recommended OVHcloud kernel.'
-            supports_gpt_label: ': This distribution supports the GUID Partition Table (GPT), providing up to 128 partitions that can have more than 2TB.'
-            supports_rtm: ': This distribution supports RTM software.'
-            supports_sql_server: ': This distribution supports the microsoft SQL server.'
-            supports_uefi: ': This distribution supports UEFI setup (no,only,yes).'
-            template_name: ': This template name'
-            type: ': partition type.'
-            use_distribution_kernel: ': Use the distribution''s native kernel instead of the recommended OVHcloud Kernel.'
-            volume_name: ': The volume name needed for proxmox distribution'
-        importStatements: []
-    me_installation_templates:
-        subCategory: ""
-        description: Get the list of custom installation templates available for dedicated servers.
-        name: me_installation_templates
-        title: me_installation_templates
-        argumentDocs:
-            result: '- The list of custom installation templates IDs available for dedicated servers.'
-        importStatements: []
-    me_ipxe_script:
-        subCategory: ""
-        description: Get information & status of an IPXE Script.
-        name: me_ipxe_script
-        title: me_ipxe_script
-        argumentDocs:
-            name: '- (Required) The name of the IPXE Script.'
-            script: '- The content of the script.'
-        importStatements: []
-    me_ipxe_scripts:
-        subCategory: ""
-        description: Get the list of the IPXE Scripts of the account.
-        name: me_ipxe_scripts
-        title: me_ipxe_scripts
-        argumentDocs:
-            result: '- The list of the names of all the IPXE Scripts.'
-        importStatements: []
-    me_paymentmean_bankaccount:
-        subCategory: ""
-        description: Get information & status of an OVHcloud bank account payment mean
-        name: me_paymentmean_bankaccount
-        title: me_paymentmean_bankaccount
-        argumentDocs:
-            default: |-
-                - a boolean which tells if the retrieved bank account
-                is marked as the default payment mean
-            description: '- the description attribute of the bank account'
-            description_regexp: |-
-                - (Optional) a regexp used to filter bank accounts
-                on their description attributes.
-            state: |-
-                - (Optional) Filter bank accounts on their state attribute.
-                Can be "blockedForIncidents", "valid", "pendingValidation"
-            use_default: '- (Optional) Retrieve bank account marked as default payment mean.'
-            use_oldest: |-
-                - (Optional) Retrieve oldest bank account.
-                project.
-        importStatements: []
-    me_paymentmean_creditcard:
-        subCategory: ""
-        description: Get information & status of an OVHcloud credit card payment mean
-        name: me_paymentmean_creditcard
-        title: me_paymentmean_creditcard
-        argumentDocs:
-            default: |-
-                - a boolean which tells if the retrieved credit card
-                is marked as the default payment mean
-            description: '- the description attribute of the credit card'
-            description_regexp: |-
-                - (Optional) a regexp used to filter credit cards
-                on their description attributes.
-            state: '- the state attribute of the credit card'
-            states: |-
-                - (Optional) Filter credit cards on their state attribute.
-                Can be "expired", "valid", "tooManyFailures"
-            use_default: '- (Optional) Retrieve credit card marked as default payment mean.'
-            use_last_to_expire: |-
-                - (Optional) Retrieve the credit card that will be the last
-                to expire according to its expiration date.
-        importStatements: []
-    me_ssh_key:
-        subCategory: ""
-        description: Get information & status of an SSH key.
-        name: me_ssh_key
-        title: me_ssh_key
-        argumentDocs:
-            default: '- True when this public SSH key is used for rescue mode and reinstallations.'
-            key: |-
-                - The content of the public key.
-                E.g.: "ssh-ed25519 AAAAC3..."
-            key_name: '- (Required) The name of the SSH key.'
-        importStatements: []
-    me_ssh_keys:
-        subCategory: ""
-        description: Get the list of the SSH keys of the account.
-        name: me_ssh_keys
-        title: me_ssh_keys
-        argumentDocs:
-            names: '- The list of the names of all the SSH keys.'
-        importStatements: []
-    order_cart:
-        subCategory: ""
-        description: Create a temporary order cart to retrieve information order cart products.
-        name: order_cart
-        title: order_cart
-        argumentDocs:
-            cart_id: '- Cart identifier'
-            description: '- Description of your cart'
-            expire: '- Expiration time (format: 2006-01-02T15:04:05+00:00)'
-            items: '- Items of your cart'
-            ovh_subsidiary: '- (Required) OVHcloud Subsidiary'
-            read_only: '- Indicates if the cart has already been validated'
-        importStatements: []
-    order_cart_product:
-        subCategory: ""
-        description: Retrieve information of order cart product products.
-        name: order_cart_product
-        title: order_cart_product
-        argumentDocs:
-            capacities: '- Capacities of the pricing (type of pricing)'
-            cart_id: '- (Required) Cart identifier'
-            currency_code: '- Currency code'
-            description: '- Description of the pricing'
-            duration: '- Duration for ordering the product'
-            interval: '- Interval of renewal'
-            maximum_quantity: '- Maximum quantity that can be ordered'
-            maximum_repeat: '- Maximum repeat for renewal'
-            minimum_quantity: '- Minimum quantity that can be ordered'
-            minimum_repeat: '- Minimum repeat for renewal'
-            plan_code: '- Product offer identifier'
-            price: '- Price of the product (Price with its currency and textual representation)'
-            price_in_ucents: '- Price of the product in micro-centims'
-            prices: '- Prices of the product offer'
-            pricing_mode: '- Pricing model identifier'
-            pricing_type: '- Pricing type'
-            product: '- (Required) product'
-            product_name: '- Name of the product'
-            product_type: '- Product type'
-            result: '- products results'
-            text: '- Textual representation'
-            value: '- The effective price'
-        importStatements: []
-    order_cart_product_options:
-        subCategory: ""
-        description: Retrieve information of order cart product options.
-        name: order_cart_product_options
-        title: order_cart_product_options
-        argumentDocs:
-            capacities: '- Capacities of the pricing (type of pricing)'
-            cart_id: '- (Required) Cart identifier'
-            catalog_name: '- Catalog name'
-            currency_code: '- Currency code'
-            description: '- Description of the pricing'
-            duration: '- Duration for ordering the product'
-            exclusive: '- Define if options of this family are exclusive with each other'
-            family: '- Option family'
-            interval: '- Interval of renewal'
-            mandatory: '- Define if an option of this family is mandatory'
-            maximum_quantity: '- Maximum quantity that can be ordered'
-            maximum_repeat: '- Maximum repeat for renewal'
-            minimum_quantity: '- Minimum quantity that can be ordered'
-            minimum_repeat: '- Minimum repeat for renewal'
-            plan_code: '- (Required) Product offer identifier'
-            price: '- Price of the product (Price with its currency and textual representation)'
-            price_in_ucents: '- Price of the product in micro-centims'
-            prices: '- Prices of the product offer'
-            pricing_mode: '- Pricing model identifier'
-            pricing_type: '- Pricing type'
-            product: '- (Required) Product'
-            product_name: '- Name of the product'
-            product_type: '- Product type'
-            result: '- products results'
-            text: '- Textual representation'
-            value: '- The effective price'
-        importStatements: []
-    order_cart_product_options_plan:
-        subCategory: ""
-        description: Retrieve information of order cart product options plan.
-        name: order_cart_product_options_plan
-        title: order_cart_product_options_plan
-        argumentDocs:
-            capacities: '- Capacities of the pricing (type of pricing)'
-            cart_id: '- (Required) Cart identifier'
-            catalog_name: '- Catalog name'
-            currency_code: '- Currency code'
-            description: '- Description of the pricing'
-            duration: '- Duration for ordering the product'
-            exclusive: '- Define if options of this family are exclusive with each other'
-            family: '- Option family'
-            interval: '- Interval of renewal'
-            mandatory: '- Define if an option of this family is mandatory'
-            maximum_quantity: '- Maximum quantity that can be ordered'
-            maximum_repeat: '- Maximum repeat for renewal'
-            minimum_quantity: '- Minimum quantity that can be ordered'
-            minimum_repeat: '- Minimum repeat for renewal'
-            options_plan_code: '- (Required) options plan code.'
-            plan_code: '- (Required) Product offer identifier'
-            price: '- Price of the product (Price with its currency and textual representation)'
-            price_capacity: '- (Required) Capacity of the pricing (type of pricing)'
-            price_in_ucents: '- Price of the product in micro-centims'
-            prices: '- Prices of the product offer'
-            pricing_mode: '- Pricing model identifier'
-            pricing_type: '- Pricing type'
-            product: '- (Required) Product'
-            product_name: '- Name of the product'
-            product_type: '- Product type'
-            selected_price: '- Selected Price according to capacity'
-            text: '- Textual representation'
-            value: '- The effective price'
-        importStatements: []
-    order_cart_product_plan:
-        subCategory: ""
-        description: Retrieve information of order cart product plan.
-        name: order_cart_product_plan
-        title: order_cart_product_plan
-        argumentDocs:
-            capacities: '- Capacities of the pricing (type of pricing)'
-            cart_id: '- (Required) Cart identifier'
-            catalog_name: '- Catalog name'
-            currency_code: '- Currency code'
-            description: '- Description of the pricing'
-            duration: '- Duration for ordering the product'
-            interval: '- Interval of renewal'
-            maximum_quantity: '- Maximum quantity that can be ordered'
-            maximum_repeat: '- Maximum repeat for renewal'
-            minimum_quantity: '- Minimum quantity that can be ordered'
-            minimum_repeat: '- Minimum repeat for renewal'
-            plan_code: '- (Required) Product offer identifier'
-            price: '- Price of the product (Price with its currency and textual representation)'
-            price_capacity: '- (Required) Capacity of the pricing (type of pricing)'
-            price_in_ucents: '- Price of the product in micro-centims'
-            prices: '- Prices of the product offer'
-            pricing_mode: '- Pricing model identifier'
-            pricing_type: '- Pricing type'
-            product: '- (Required) Product'
-            product_name: '- Name of the product'
-            product_type: '- Product type'
-            selected_price: '- Selected Price according to capacity'
-            text: '- Textual representation'
-            value: '- The effective price'
         importStatements: []
     ovh_cloud_project:
         subCategory: ""
-        description: Orders a public cloud project.
         name: ovh_cloud_project
-        title: ovh_cloud_project
+        title: ""
         examples:
-            - name: cloud
+            - name: my_cloud_project
               manifest: |-
                 {
                   "description": "my cloud project",
                   "ovh_subsidiary": "${data.ovh_order_cart.mycart.ovh_subsidiary}",
-                  "payment_mean": "fidelity",
                   "plan": [
                     {
                       "duration": "${data.ovh_order_cart_product_plan.cloud.selected_price.0.duration}",
@@ -1334,7 +66,7 @@ resources:
                 plan.plan_code: data.ovh_order_cart_product_plan.cloud.plan_code
                 plan.pricing_mode: data.ovh_order_cart_product_plan.cloud.selected_price.0.pricing_mode
         argumentDocs:
-            access: '- project access'
+            access: '- project access right for the identity that trigger the terraform script.'
             catalog_name: '- Catalog name'
             configuration: '- (Optional) Representation of a configuration item for personalizing product'
             date: '- date'
@@ -1344,11 +76,10 @@ resources:
             duration: '- (Required) duration'
             expiration_date: '- expiration date'
             label: '- (Required) Identifier of the resource'
-            order: '- Details about an Order'
+            order: '- Details about the order that was used to create the public cloud project'
             order_detail_id: '- order detail id'
-            order_id: '- order id'
+            order_id: '- order id, the same as the id'
             ovh_subsidiary: '- (Required) OVHcloud Subsidiary'
-            payment_mean: '- (Required) OVHcloud payment mode (One of "default-payment-mean", "fidelity", "ovh-account")'
             plan: '- (Required) Product Plan to order'
             plan_code: '- (Required) Plan code'
             plan_option: '- (Optional) Product Plan to order'
@@ -1361,9 +92,8 @@ resources:
         importStatements: []
     ovh_cloud_project_containerregistry:
         subCategory: ""
-        description: Creates a container registry associated with a public cloud project.
         name: ovh_cloud_project_containerregistry
-        title: cloud_project_containerregistry
+        title: ""
         examples:
             - name: reg
               manifest: |-
@@ -1402,9 +132,8 @@ resources:
         importStatements: []
     ovh_cloud_project_containerregistry_user:
         subCategory: ""
-        description: Creates a user for a container registry associated with a public cloud project.
         name: ovh_cloud_project_containerregistry_user
-        title: cloud_project_containerregistry_user
+        title: ""
         examples:
             - name: user
               manifest: |-
@@ -1429,9 +158,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database:
         subCategory: ""
-        description: Creates a managed database cluster in a public cloud project.
         name: ovh_cloud_project_database
-        title: cloud_project_database
+        title: ""
         examples:
             - name: cassandradb
               manifest: |-
@@ -1509,6 +237,10 @@ resources:
             - name: mysqldb
               manifest: |-
                 {
+                  "advanced_configuration": {
+                    "mysql.sql_mode": "ANSI,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION,NO_ZERO_DATE,NO_ZERO_IN_DATE,STRICT_ALL_TABLES",
+                    "mysql.sql_require_primary_key": "true"
+                  },
                   "description": "my-first-mysql",
                   "engine": "mysql",
                   "flavor": "db1-4",
@@ -1567,6 +299,21 @@ resources:
                   "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                   "version": "6.2"
                 }
+            - name: grafana
+              manifest: |-
+                {
+                  "description": "my-first-grafana",
+                  "engine": "grafana",
+                  "flavor": "db1-4",
+                  "nodes": [
+                    {
+                      "region": "GRA"
+                    }
+                  ],
+                  "plan": "essential",
+                  "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
+                  "version": "9.1"
+                }
             - name: postgresql
               manifest: |-
                 {
@@ -1624,12 +371,15 @@ resources:
                   ]
                 }
         argumentDocs:
+            advanced_configuration: '-  (Optional) Advanced configuration key / value.'
             backup_time: '- Time on which backups start every day.'
             component: '- Type of component the URI relates to.'
             create: '- (Default 20m)'
             created_at: '- Date of the creation of the cluster.'
             delete: '- (Default 20m)'
             description: '- (Optional) Small description of the database service.'
+            disk_size: '-  (Optional) The disk size (in GB) of the database service.'
+            disk_type: '-  Defines the disk type of the database service.'
             domain: '- Domain of the cluster.'
             endpoints: '- List of all endpoints objects of the service.'
             engine: |-
@@ -1670,9 +420,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_database:
         subCategory: ""
-        description: Creates an database for a database cluster associated with a public cloud project.
         name: ovh_cloud_project_database_database
-        title: cloud_project_database_database
+        title: ""
         examples:
             - name: database
               manifest: |-
@@ -1712,9 +461,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_integration:
         subCategory: ""
-        description: Creates an integration for a database cluster associated with a public cloud project.
         name: ovh_cloud_project_database_integration
-        title: cloud_project_database_integration
+        title: ""
         examples:
             - name: integration
               manifest: |-
@@ -1754,9 +502,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_ip_restriction:
         subCategory: ""
-        description: Creates an IP restriction for a managed database cluster associated with a public cloud project.
         name: ovh_cloud_project_database_ip_restriction
-        title: cloud_project_database_ip_restriction
+        title: ""
         examples:
             - name: iprestriction
               manifest: |-
@@ -1798,9 +545,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_kafka_acl:
         subCategory: ""
-        description: Creates an ACL for a kafka cluster associated with a public cloud project.
         name: ovh_cloud_project_database_kafka_acl
-        title: cloud_project_database_kafka_acl
+        title: ""
         examples:
             - name: acl
               manifest: |-
@@ -1840,9 +586,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_kafka_topic:
         subCategory: ""
-        description: Creates a topic for a kafka cluster associated with a public cloud project.
         name: ovh_cloud_project_database_kafka_topic
-        title: cloud_project_database_kafka_topic
+        title: ""
         examples:
             - name: topic
               manifest: |-
@@ -1886,9 +631,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_m3db_namespace:
         subCategory: ""
-        description: Creates a namespace for a M3DB cluster associated with a public cloud project.
         name: ovh_cloud_project_database_m3db_namespace
-        title: cloud_project_database_m3db_namespace
+        title: ""
         examples:
             - name: namespace
               manifest: |-
@@ -1935,9 +679,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_m3db_user:
         subCategory: ""
-        description: Creates an user for a M3DB cluster associated with a public cloud project.
         name: ovh_cloud_project_database_m3db_user
-        title: cloud_project_database_m3db_user
+        title: ""
         examples:
             - name: user
               manifest: |-
@@ -1980,7 +723,7 @@ resources:
             delete: '- (Default 20m)'
             group: '- (Optional) Group of the user:'
             id: '- ID of the user.'
-            name: '- (Required, Forces new resource) Name of the user.'
+            name: '- (Required, Forces new resource) Name of the user. A user named "avnadmin" is map with already created admin user instead of create a new user.'
             password: '- (Sensitive) Password of the user.'
             password_reset: '- (Optional) Arbitrary string to change to trigger a password update. Use the terraform refresh command after executing terraform apply to update the output with the new password.'
             service_name: |-
@@ -1991,9 +734,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_mongodb_user:
         subCategory: ""
-        description: Creates an user for a MongoDB cluster associated with a public cloud project.
         name: ovh_cloud_project_database_mongodb_user
-        title: cloud_project_database_mongodb_user
+        title: ""
         examples:
             - name: user
               manifest: |-
@@ -2055,9 +797,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_opensearch_pattern:
         subCategory: ""
-        description: Creates a pattern for a opensearch cluster associated with a public cloud project.
         name: ovh_cloud_project_database_opensearch_pattern
-        title: cloud_project_database_opensearch_pattern
+        title: ""
         examples:
             - name: pattern
               manifest: |-
@@ -2093,9 +834,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_opensearch_user:
         subCategory: ""
-        description: Creates an user for a OpenSearch cluster associated with a public cloud project.
         name: ovh_cloud_project_database_opensearch_user
-        title: cloud_project_database_opensearch_user
+        title: ""
         examples:
             - name: user
               manifest: |-
@@ -2156,7 +896,7 @@ resources:
             created_at: '- Date of the creation of the user.'
             delete: '- (Default 20m)'
             id: '- ID of the user.'
-            name: '- (Required, Forces new resource) Username affected by this acl.'
+            name: '- (Required, Forces new resource) Username affected by this acl. A user named "avnadmin" is map with already created admin user and reset his password instead of create a new user.'
             password: '- (Sensitive) Password of the user.'
             password_reset: '- (Optional) Arbitrary string to change to trigger a password update. Use the terraform refresh command after executing terraform apply to update the output with the new password.'
             pattern: '- (Required) Pattern of the ACL.'
@@ -2171,9 +911,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_postgresql_user:
         subCategory: ""
-        description: Creates an user for a PostgreSQL cluster associated with a public cloud project.
         name: ovh_cloud_project_database_postgresql_user
-        title: cloud_project_database_postgresql_user
+        title: ""
         examples:
             - name: user
               manifest: |-
@@ -2219,7 +958,7 @@ resources:
             created_at: '- Date of the creation of the user.'
             delete: '- (Default 20m)'
             id: '- ID of the user.'
-            name: '- (Required, Forces new resource) Name of the user.'
+            name: '- (Required, Forces new resource) Name of the user. A user named "avnadmin" is map with already created admin user and reset his password instead of create a new user.'
             password: '- (Sensitive) Password of the user.'
             password_reset: '- (Optional) Arbitrary string to change to trigger a password update. Use the terraform refresh command after executing terraform apply to update the output with the new password.'
             roles: |-
@@ -2233,9 +972,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_redis_user:
         subCategory: ""
-        description: Creates an user for a Redis cluster associated with a public cloud project.
         name: ovh_cloud_project_database_redis_user
-        title: cloud_project_database_redis_user
+        title: ""
         examples:
             - name: user
               manifest: |-
@@ -2309,7 +1047,7 @@ resources:
             delete: '- (Default 20m)'
             id: '- ID of the user.'
             keys: '- (Optional) Keys of the user.'
-            name: '- (Required, Forces new resource) Name of the user.'
+            name: '- (Required, Forces new resource) Name of the user. A user named "avnadmin" is map with already created admin user and reset his password instead of create a new user.'
             password: '- (Sensitive) Password of the user.'
             password_reset: '- (Optional) Arbitrary string to change to trigger a password update. Use the terraform refresh command after executing terraform apply to update the output with the new password.'
             service_name: |-
@@ -2320,9 +1058,8 @@ resources:
         importStatements: []
     ovh_cloud_project_database_user:
         subCategory: ""
-        description: Creates an user for a database cluster associated with a public cloud project.
         name: ovh_cloud_project_database_user
-        title: cloud_project_database_user
+        title: ""
         examples:
             - name: user
               manifest: |-
@@ -2369,7 +1106,7 @@ resources:
                 - (Required, Forces new resource) The engine of the database cluster you want to add. You can find the complete list of available engine in the public documentation.
                 Available engines:
             id: '- ID of the user.'
-            name: '- (Required, Forces new resource) Name of the user.'
+            name: '- (Required, Forces new resource) Name of the user. A user named "avnadmin" is map with already created admin user and reset his password instead of create a new user. The "Grafana" engine only allows the "avnadmin" mapping.'
             password: '- (Sensitive) Password of the user.'
             password_reset: '- (Optional) Arbitrary string to change to trigger a password update. Use the terraform refresh command after executing terraform apply to update the output with the new password.'
             service_name: |-
@@ -2380,9 +1117,8 @@ resources:
         importStatements: []
     ovh_cloud_project_failover_ip_attach:
         subCategory: ""
-        description: Attaches failover ip addresses to cloud instances
         name: ovh_cloud_project_failover_ip_attach
-        title: cloud_project_failover_ip_attach
+        title: ""
         examples:
             - name: myfailoverip
               manifest: |-
@@ -2408,9 +1144,8 @@ resources:
         importStatements: []
     ovh_cloud_project_kube:
         subCategory: ""
-        description: Creates a kubernetes managed cluster in a public cloud project.
         name: ovh_cloud_project_kube
-        title: cloud_project_kube
+        title: ""
         examples:
             - name: mycluster
               manifest: |-
@@ -2422,24 +1157,69 @@ resources:
             - name: mycluster
               manifest: |-
                 {
-                  "customization": [
+                  "name": "my_kube_cluster",
+                  "region": "GRA7",
+                  "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                }
+            - name: mycluster
+              manifest: |-
+                {
+                  "name": "my_kube_cluster",
+                  "region": "GRA7",
+                  "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                }
+            - name: mycluster
+              manifest: |-
+                {
+                  "name": "my_kube_cluster",
+                  "region": "GRA7",
+                  "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                }
+            - name: mycluster
+              manifest: |-
+                {
+                  "customization_apiserver": [
                     {
-                      "apiserver": [
+                      "admissionplugins": [
                         {
-                          "admissionplugins": [
-                            {
-                              "disabled": [
-                                "AlwaysPullImages"
-                              ],
-                              "enabled": [
-                                "NodeRestriction"
-                              ]
-                            }
+                          "disabled": [
+                            "AlwaysPullImages"
+                          ],
+                          "enabled": [
+                            "NodeRestriction"
                           ]
                         }
                       ]
                     }
                   ],
+                  "name": "my_kube_cluster",
+                  "region": "GRA5",
+                  "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                }
+            - name: mycluster
+              manifest: |-
+                {
+                  "customization_kube_proxy": [
+                    {
+                      "iptables": [
+                        {
+                          "min_sync_period": "PT0S",
+                          "sync_period": "PT0S"
+                        }
+                      ],
+                      "ipvs": [
+                        {
+                          "min_sync_period": "PT0S",
+                          "scheduler": "rr",
+                          "sync_period": "PT0S",
+                          "tcp_fin_timeout": "PT0S",
+                          "tcp_timeout": "PT0S",
+                          "udp_timeout": "PT0S"
+                        }
+                      ]
+                    }
+                  ],
+                  "kube_proxy_mode": "ipvs",
                   "name": "my_kube_cluster",
                   "region": "GRA5",
                   "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
@@ -2495,38 +1275,65 @@ resources:
                       "project_id": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx",
                       "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                     }
+            - name: my_kube_cluster
+              manifest: |-
+                {
+                  "timeouts": [
+                    {
+                      "create": "1h",
+                      "delete": "50s",
+                      "update": "45m"
+                    }
+                  ]
+                }
         argumentDocs:
-            control_plane_is_up_to_date: '- True if control-plane is up to date.'
-            customization: '- (Optional) Customer customization object'
+            admissionplugins: '- (Optional) Kubernetes API server admission plugins customization'
+            apiserver: '- Kubernetes API server customization'
+            client_certificate: '- The kubernetes API server client certificate.'
+            client_key: '- The kubernetes API server client key.'
+            cluster_ca_certificate: '- The kubernetes API server CA certificate.'
+            control_plane_is_up_to_date: '- True if control-plane is up-to-date.'
+            create: '- (Default 10m)'
+            customization: '- Deprecated (Optional) Use customization_apiserver and customization_kube_proxy instead. Kubernetes cluster customization'
+            customization_apiserver: '- Kubernetes API server customization'
+            customization_kube_proxy: '- Kubernetes kube-proxy customization'
+            default_vrack_gateway: '- If defined, all egress traffic will be routed towards this IP address, which should belong to the private network. Empty string means disabled.'
+            delete: '- (Default 10m)'
+            disabled: '- (Optional) Array of admission plugins disabled, default is [] and only AlwaysPulImages can be disabled at this time.'
+            enabled: '- (Optional) Array of admission plugins enabled, default is ["NodeRestriction","AlwaysPulImages"] and only these admission plugins can be enabled at this time.'
+            host: '- The kubernetes API server URL.'
             id: '- Managed Kubernetes Service ID'
-            is_up_to_date: '- True if all nodes and control-plane are up to date.'
+            iptables: '- (Optional) Kubernetes cluster kube-proxy customization of iptables specific config (durations format is RFC3339 duration, e.g. PT60S)'
+            ipvs: '- (Optional) Kubernetes cluster kube-proxy customization of IPVS specific config (durations format is RFC3339 duration, e.g. PT60S)'
+            is_up_to_date: '- True if all nodes and control-plane are up-to-date.'
+            kube_proxy: '- Kubernetes kube-proxy customization'
+            kube_proxy_mode: '- (Optional) Selected mode for kube-proxy. Changing this value recreates the resource, including ETCD user data. Defaults to iptables.'
             kubeconfig: '- The kubeconfig file. Use this file to connect to your kubernetes cluster.'
+            kubeconfig_attributes: '- The kubeconfig file attributes.'
+            min_sync_period: '- (Optional) Period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S). Must be greater than 0.'
             name: '- (Optional) The name of the kubernetes cluster.'
             next_upgrade_versions: '- Kubernetes versions available for upgrade.'
             nodes_url: '- Cluster nodes URL.'
             private_network_configuration: '- (Optional) The private network configuration'
-            private_network_id: |-
-                - (Optional) OpenStack private network ID to use.
-                Changing this value delete the resource(including ETCD user data). Defaults - not use private network.
-            region: |-
-                - a valid OVHcloud public cloud region ID in which the kubernetes
-                cluster will be available. Ex.: "GRA1". Defaults to all public cloud regions.
-                Changing this value recreates the resource.
-            service_name: |-
-                - (Optional) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+            private_network_id: '- (Optional) OpenStack private network (or vRack) ID to use. Changing this value recreates the resource, including ETCD user data. Defaults - not use private network.'
+            private_network_routing_as_default: '- Defines whether routing should default to using the nodes'' private interface, instead of their public interface. Default is false.'
+            region: '- a valid OVHcloud public cloud region ID in which the kubernetes cluster will be available. Ex.: "GRA1". Defaults to all public cloud regions. Changing this value recreates the resource.'
+            scheduler: '- (Optional) IPVS scheduler.'
+            service_name: '- The id of the public cloud project. If omitted, the OVH_CLOUD_PROJECT_SERVICE environment variable is used. Changing this value recreates the resource.'
             status: '- Cluster status. Should be normally set to ''READY''.'
+            sync_period: '- (Optional) Minimum period that iptables rules are refreshed, in RFC3339 duration format (e.g. PT60S).'
+            tcp_fin_timeout: '- (Optional) Timeout value used for IPVS TCP sessions after receiving a FIN in RFC3339 duration (e.g. PT60S). The default value is PT0S, which preserves the current timeout value on the system.'
+            tcp_timeout: '- (Optional) Timeout value used for idle IPVS TCP sessions in RFC3339 duration (e.g. PT60S). The default value is PT0S, which preserves the current timeout value on the system.'
+            udp_timeout: '- (Optional) timeout value used for IPVS UDP packets in RFC3339 duration (e.g. PT60S). The default value is PT0S, which preserves the current timeout value on the system.'
+            update: '- (Default 10m)'
             update_policy: '- Cluster update policy. Choose between [ALWAYS_UPDATE, MINIMAL_DOWNTIME, NEVER_UPDATE].'
             url: '- Management URL of your cluster.'
-            version: |-
-                - (Optional) kubernetes version to use.
-                Changing this value updates the resource. Defaults to latest available.
+            version: '- (Optional) kubernetes version to use. Changing this value updates the resource. Defaults to the latest available.'
         importStatements: []
     ovh_cloud_project_kube_iprestrictions:
         subCategory: ""
-        description: Apply IP restrictions to an OVHcloud Managed Kubernetes cluster.
         name: ovh_cloud_project_kube_iprestrictions
-        title: cloud_project_kube_iprestrictions
+        title: ""
         examples:
             - name: vrack_only
               manifest: |-
@@ -2537,25 +1344,47 @@ resources:
                   "kube_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxx",
                   "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
                 }
+            - name: vrack_only
+              manifest: |-
+                {
+                  "timeouts": [
+                    {
+                      "create": "1h",
+                      "delete": "50s",
+                      "update": "45m"
+                    }
+                  ]
+                }
         argumentDocs:
+            create: '- (Default 10m)'
+            delete: '- (Default 5m)'
             ips: '- List of CIDR authorized to interact with the managed Kubernetes cluster.'
-            kube_id: '- The id of the managed Kubernetes cluster.'
-            service_name: |-
-                - (Optional) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+            kube_id: '- The id of the managed Kubernetes cluster. Changing this value recreates the resource.'
+            service_name: '- The id of the public cloud project. If omitted, the OVH_CLOUD_PROJECT_SERVICE environment variable is used. Changing this value recreates the resource.'
+            update: '- (Default 5m)'
         importStatements: []
     ovh_cloud_project_kube_nodepool:
         subCategory: ""
-        description: Creates a nodepool in a kubernetes managed cluster.
         name: ovh_cloud_project_kube_nodepool
-        title: cloud_project_kube_nodepool
+        title: ""
         examples:
+            - name: node_pool
+              manifest: |-
+                {
+                  "desired_nodes": 3,
+                  "flavor_name": "b2-7",
+                  "kube_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
+                  "max_nodes": 3,
+                  "min_nodes": 3,
+                  "name": "my-pool-1",
+                  "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                }
             - name: pool
               manifest: |-
                 {
                   "desired_nodes": 3,
                   "flavor_name": "b2-7",
-                  "kube_id": "xxxxxxxx-2bf9-xxxx-xxxx-xxxxxxxxxxxx",
+                  "kube_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxxx",
                   "max_nodes": 3,
                   "min_nodes": 3,
                   "name": "my-pool",
@@ -2593,45 +1422,55 @@ resources:
                     }
                   ]
                 }
+            - name: pool
+              manifest: |-
+                {
+                  "timeouts": [
+                    {
+                      "create": "1h",
+                      "delete": "50s",
+                      "update": "45m"
+                    }
+                  ]
+                }
         argumentDocs:
-            anti_affinity: '- (Optional) should the pool use the anti-affinity feature. Default to false.'
+            annotations: '- (Optional) Annotations to apply to each node'
+            anti_affinity: '- (Optional) should the pool use the anti-affinity feature. Default to false. Changing this value recreates the resource.'
             autoscale: '- (Optional) Enable auto-scaling for the pool. Default to false.'
             available_nodes: '- Number of nodes which are actually ready in the pool'
+            create: '- (Default 20m)'
             created_at: '- Creation date'
             current_nodes: '- Number of nodes present in the pool'
+            delete: '- (Default 10m)'
             desired_nodes: '- number of nodes to start.'
+            finalizers: '- (Optional) Finalizers to apply to each node'
             flavor: '- Flavor name'
             flavor_name: |-
-                - a valid OVHcloud public cloud flavor ID in which the nodes will be started.
-                Ex: "b2-7". Changing this value recreates the resource.
-                You can find the list of flavor IDs: https://www.ovhcloud.com/fr/public-cloud/prices/
-            kube_id: '- The id of the managed kubernetes cluster.'
-            max_nodes: |-
-                - maximum number of nodes allowed in the pool.
-                Setting desired_nodes over this value will raise an error.
-            min_nodes: |-
-                - minimum number of nodes allowed in the pool.
-                Setting desired_nodes under this value will raise an error.
-            monthly_billed: '- (Optional) should the nodes be billed on a monthly basis. Default to false.'
-            name: |-
-                - (Optional) The name of the nodepool.
+                - a valid OVHcloud public cloud flavor ID in which the nodes will be started. Ex: "b2-7". You can find the list of flavor IDs: https://www.ovhcloud.com/fr/public-cloud/prices/.
                 Changing this value recreates the resource.
-                Warning: "_" char is not allowed!
+            kube_id: '- The id of the managed kubernetes cluster. Changing this value recreates the resource.'
+            labels: '- (Optional) Labels to apply to each node'
+            max_nodes: '- maximum number of nodes allowed in the pool. Setting desired_nodes over this value will raise an error.'
+            metadata: '- (Optional) Metadata of each node in the pool'
+            min_nodes: '- minimum number of nodes allowed in the pool. Setting desired_nodes under this value will raise an error.'
+            monthly_billed: '- (Optional) should the nodes be billed on a monthly basis. Default to false. Changing this value recreates the resource.'
+            name: '- (Optional) The name of the nodepool. Warning: _ char is not allowed! Changing this value recreates the resource.'
             project_id: '- Project id'
-            service_name: |-
-                - (Optional) The id of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+            service_name: '- The id of the public cloud project. If omitted, the OVH_CLOUD_PROJECT_SERVICE environment variable is used. Changing this value recreates the resource.'
             size_status: '- Status describing the state between number of nodes wanted and available ones'
+            spec: '- (Optional) Spec of each node in the pool'
             status: '- Current status'
+            taints: '- (Optional) Taints to apply to each node'
             'template ': '- (Optional) Managed Kubernetes nodepool template, which is a complex object constituted by two main nested objects:'
-            up_to_date_nodes: '- Number of nodes with latest version installed in the pool'
+            unschedulable: '- (Optional) If true, set nodes as un-schedulable'
+            up_to_date_nodes: '- Number of nodes with the latest version installed in the pool'
+            update: '- (Default 10m)'
             updated_at: '- Last update date'
         importStatements: []
     ovh_cloud_project_kube_oidc:
         subCategory: ""
-        description: Creates an OIDC configuration in an OVHcloud Managed Kubernetes cluster.
         name: ovh_cloud_project_kube_oidc
-        title: cloud_project_kube_oidc
+        title: ""
         examples:
             - name: my-oidc
               manifest: |-
@@ -2639,24 +1478,55 @@ resources:
                   "client_id": "xxx",
                   "issuer_url": "https://ovh.com",
                   "kube_id": "${ovh_cloud_project_kube.mykube.id}",
+                  "oidc_ca_content": "LS0tLS1CRUdJTiBDRVJUSUZJQ0FURS0tLS0tCk1JSUZhekNDQTFPZ0F3SUJBZ0lVYm9YRkZrL1hCQmdQUUI4UHlqbkttUGVWekNjd0RRWUpLb1pJaHZjTkFRRUwKQlFBd1JURUxNQWtHQTFVRUJoTUNRVlV4RXpBUkJnTlZCQWdNQ2xOdmJXVXRVM1JoZEdVeElUQWZCZ05WQkFvTQpHRWx1ZEdWeWJtVjBJRmRwWkdkcGRITWdVSFI1SUV4MFpEQWVGdzB5TWpFd01UUXdOalE0TlROYUZ3MHlNekV3Ck1UUXdOalE0TlROYU1FVXhDekFKQmdOVkJBWVRBa0ZWTVJNd0VRWURWUVFJREFwVGIyMWxMVk4wWVhSbE1TRXcKSHdZRFZRUUtEQmhKYm5SbGNtNWxkQ0JYYVdSbmFYUnpJRkIwZVNCTWRHUXdnZ0lpTUEwR0NTcUdTSWIzRFFFQgpBUVVBQTRJQ0R3QXdnZ0lLQW9JQ0FRQytPMk53bGx2QTQyT05SUHMyZWlqTUp2UHhpN21RblVSS3FrOHJEV1VkCkwzZU0yM1JXeVhtS1AydDQ5Zi9LVGsweEZNVStOSTUzTEhwWmh6N3NpK3dEUFUvWWZWSS9rQmZsRm8zeVZCMSsKZWdCSnpyNGIrQ3FoaWlCUkh0Vm5LblFKUmdvOVJjVkxhRm82UEY0N1V0UWJ2bWVuNGdERnExVkYwVHhUdnFMdwpIMzRZL0U2QUJsSlZnWFBzaWQzNm54eTErNnlKV05vRXNVekFiekpWMHhzTGhxc2hOazA0TWx4YnBhcG1XcEUxCmFFMHRIZGpjUlI3Y1dTRUUwMnRSQzNYL2tSNjBKb3MxR0N0Y0ZQTTVIN3NjOFBXNFRUem1EWWhOeDRiVjV4T28KU0xYRnI5ajBzZEgxbm1wSlI1dWxJT2dPTWV3MHA2d3JOYVV2MGpxc1hzdVdqMVpxdTRLRi81aEQ3azVhRlhKNQpjYWNTUi9mRWxreW1uZis0eHZFOG8wdkRWNFR5NHo3K3lSS1U0clZvZFNBZWZIN3lqeitLV1RRck96L0lHU2NwCmV1YTdqV0hRMDdMYWxyTjV2b0tFaU1JM3MrWjhzeUdVUGVyYXQwdzJMWlc3NnhxVGl4R002clZxUldxVlQ4L1oKQTJMMEc4WGRvNTZvV2lFYVF5RkJtRDFnMXU2UEsvTmFGVDI1L2tTNWJ1dnF5L1dLVGt0UVNhNHNZc1ZLbUlQTQp0Zys0NUZ2aFErNkRuQzd0TmVnaTZDTkdTb0w0R1dPOEE5UDZRNjE5RkJJZ1VjcGpFMTgvUHpQOEJmcTAxajhnCjZmdm1jNkVPMkxHVHhDcW1DbVp0TnI3OCtQaUxkMHZIY3pqY3E3NzhiNW5WRXRpUVNRQkUyb0ozTVlIZUFIUUkKYVFJREFRQUJvMU13VVRBZEJnTlZIUTRFRmdRVUpaMUhlVmx1U3pjY0U2NEZQYWtuNkRBWnhmSXdId1lEVlIwagpCQmd3Rm9BVUpaMUhlVmx1U3pjY0U2NEZQYWtuNkRBWnhmSXdEd1lEVlIwVEFRSC9CQVV3QXdFQi96QU5CZ2txCmhraUc5dzBCQVFzRkFBT0NBZ0VBQlhNSlU2MjJZVFZVNnZ1K2svNnkwMGNaWlRmVnZtdVJMOXhTcWxVM0I1QmQKVWdyVWx1TmdjN2dhUUlrYzkvWmh2MnhNd0xxUldMWEhiTWx1NkNvdkNiVTVpeWt0NHVWMnl5UzlZYWhmVVRNVQo3TVE0WFRta2hoS0dGbWZBQ2QzTUVwRE55T3hmWXh0UVBwM1NZT2IxRGFKMmUwY01Gc081bytORGQ5aFVBVzFoCjFLMjMwQnZzYldYYVo4MStIdTU4U1BsYTM5R3FMTG85MzR6dEs4WkRWNFRGTVJxMnNVQ1cxcWFidDh5ejd2RzAKSGV3dXdxelRwR1lTSFI1U0ZvMm45R0xKVUN4SnhxcDlOWVJjMlhUdXRUdkJESzVPMXFZZEJaQzd6cmcxSnczawp2SjI4UGx2TzBQRE42ZVlUdElJdC9yU05ZbW56eVVNRTRYREt0di9KRitLZWZNSWxDTkpzZDRHYXVTdlo5M1NOClhINmcrNEZvRkp4UzNxRmZ0WEc4czNRNnppNzNLRzh5UHZVNHU0WmZNRGd2aG92L0V5YkNLWUpFdVVZSlJWNGEKbmc3cWh3NDBabXQ0eWNCRzU5a2tFSGhNYWtxTWpPaUNkV2x4MEVjZXIxcEFGT1pqN3o1NktURXIxa0ZwUHVaRApjVER5SnNwTjh6dm9CQ0l1ancvQjR6S3kyWStOQitRR1p3dXhyTk9mRGR6ek9yQUE1Ym9OS2gwUUh4c0RxNTExClFaU3hCR21EcGJzN2QzMUQvQll3WEhIUWdwb3FoVUU5dFBGSThpN0pkM2FyeXZCdHlnTWlxSmt1VlRFVk1Ta0UKNTZ0VnFsMjlXenFhRXNrbDN3VUlmczVKKzN3RzRPcWNxRDdXaGQxWUtnc0VUMjdFTWlqVXZIYzQ4TXE0bU1rPQotLS0tLUVORCBDRVJUSUZJQ0FURS0tLS0tCg==",
+                  "oidc_groups_claim": [
+                    "groups"
+                  ],
+                  "oidc_groups_prefix": "ovh:",
+                  "oidc_required_claim": [
+                    "claim1=val1"
+                  ],
+                  "oidc_signing_algs": [
+                    "RS512"
+                  ],
+                  "oidc_username_claim": "an-email",
+                  "oidc_username_prefix": "ovh:",
                   "service_name": "${var.projectid}"
                 }
               references:
                 kube_id: ovh_cloud_project_kube.mykube.id
                 service_name: var.projectid
+            - name: oidc
+              manifest: |-
+                {
+                  "timeouts": [
+                    {
+                      "create": "1h",
+                      "delete": "50s",
+                      "update": "45m"
+                    }
+                  ]
+                }
         argumentDocs:
             client_id: '- The OIDC client ID.'
+            create: '- (Default 10m)'
+            delete: '- (Default 10m)'
             issuer_url: '- The OIDC issuer url.'
-            kube_id: '- The ID of the managed kubernetes cluster.'
-            service_name: |-
-                - (required) The ID of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+            kube_id: '- The ID of the managed kubernetes cluster. Changing this value recreates the resource.'
+            oidcCaContent: '- Content of the certificate for the CA, in Base64 format, that signed your identity provider''s web certificate. Defaults to the host''s root CAs.'
+            oidcGroupsClaim: '- Array of JWT claim to use as the user''s group. If the claim is present it must be an array of strings.'
+            oidcGroupsPrefix: '- Prefix prepended to group claims to prevent clashes with existing names (such as system:groups). For example, the value oidc: will create group names like oidc:engineering and oidc:infra.'
+            oidcRequiredClaim: '- Array of key=value pairs that describe required claims in the ID Token. If set, the claims are verified to be present in the ID Token with a matching value."'
+            oidcSigningAlgs: '- Array of signing algorithms accepted. Default is RS256.'
+            oidcUsernameClaim: '- JWT claim to use as the username. By default, sub, which is expected to be a unique identifier of the end user. Admins can choose other claims, such as email or name, depending on their provider. However, claims other than email will be prefixed with the issuer URL to prevent naming clashes with other plugins.'
+            oidcUsernamePrefix: '- Prefix prepended to username claims to prevent clashes with existing names (such as system:users). For example, the value oidc: will create usernames like oidc:jane.doe. If this field isn''t set and oidcUsernameClaim is a value other than email the prefix defaults to issuer_url where issuer_url is the value of oidcIssuerUrl. The value - can be used to disable all prefixing.'
+            service_name: '- The ID of the public cloud project. If omitted, the OVH_CLOUD_PROJECT_SERVICE environment variable is used. Changing this value recreates the resource.'
+            update: '- (Default 10m)'
         importStatements: []
     ovh_cloud_project_network_private:
         subCategory: ""
-        description: Creates a private network in a public cloud project.
         name: ovh_cloud_project_network_private
-        title: cloud_project_network_private
+        title: ""
         examples:
             - name: net
               manifest: |-
@@ -2692,9 +1562,8 @@ resources:
         importStatements: []
     ovh_cloud_project_network_private_subnet:
         subCategory: ""
-        description: Creates a subnet in a private network of a public cloud project.
         name: ovh_cloud_project_network_private_subnet
-        title: cloud_project_network_private_subnet
+        title: ""
         examples:
             - name: subnet
               manifest: |-
@@ -2744,11 +1613,38 @@ resources:
                 - (Required) First ip for this region.
                 Changing this value recreates the subnet.
         importStatements: []
+    ovh_cloud_project_region_storage_presign:
+        subCategory: ""
+        name: ovh_cloud_project_region_storage_presign
+        title: ""
+        examples:
+            - name: presigned_url
+              manifest: |-
+                {
+                  "expire": 3600,
+                  "method": "GET",
+                  "name": "s3-bucket-name",
+                  "object": "an-object-in-the-bucket",
+                  "region_name": "GRA",
+                  "service_name": "xxxxxxxxxxxxxxxxx"
+                }
+        argumentDocs:
+            expire: '- (Required) Define, in seconds, for how long your URL will be valid.'
+            method: '- (Required) The method you want to use to interact with your object. Can be either ''GET'' or ''PUT''.'
+            name: '- (Required) The name of your S3 storage container/bucket.'
+            object: '- (Required) The name of the object in your S3 bucket.'
+            region_name: |-
+                - (Required) The region in which your storage is located.
+                Ex.: "GRA".
+            service_name: |-
+                - (Required) The id of the public cloud project. If omitted,
+                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+            url: '- Computed URL result.'
+        importStatements: []
     ovh_cloud_project_user:
         subCategory: ""
-        description: Creates a user in a public cloud project.
         name: ovh_cloud_project_user
-        title: ovh_cloud_project_user
+        title: ""
         examples:
             - name: user1
               manifest: |-
@@ -2779,24 +1675,10 @@ resources:
                 - the username generated for the user. This username can be used with
                 the Openstack API.
         importStatements: []
-    ovh_cloud_project_user_s3_credential:
-        subCategory: ""
-        description: Creates an S3 Credential for a user in a public cloud project.
-        name: ovh_cloud_project_user_s3_credential
-        title: ovh_cloud_project_user_s3_credential
-        argumentDocs:
-            access_key_id: '- the Access Key ID'
-            secret_access_key: '- (Sensitive) the Secret Access Key'
-            service_name: |-
-                - (Required) The ID of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            user_id: '- (Required) The ID of a public cloud project''s user.'
-        importStatements: []
     ovh_cloud_project_user_s3_policy:
         subCategory: ""
-        description: Set the S3 Policy of a public cloud project user.
         name: ovh_cloud_project_user_s3_policy
-        title: ovh_cloud_project_user_s3_policy
+        title: ""
         examples:
             - name: policy
               manifest: |-
@@ -2829,64 +1711,67 @@ resources:
                 the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
             user_id: '- (Required) The ID of a public cloud project''s user.'
         importStatements: []
-    ovh_cloud_project_users:
+    ovh_cloud_project_workflow_backup:
         subCategory: ""
-        description: Get the list of all users of a public cloud project.
-        name: ovh_cloud_project_users
-        title: ovh_cloud_project_users
+        name: ovh_cloud_project_workflow_backup
+        title: ""
+        examples:
+            - name: my_backup
+              manifest: |-
+                {
+                  "cron": "50 4 * * *",
+                  "instance_id": "xxxxxxxx-xxxx-xxxx-xxxx-xxxxxxxxxxx",
+                  "max_execution_count": "0",
+                  "name": "Backup workflow for instance",
+                  "region_name": "GRA11",
+                  "rotation": "7",
+                  "service_name": "xxxxxxxxxxxxxxxxxxxxxxxxxxxxxx"
+                }
         argumentDocs:
-            creation_date: '- the date the user was created.'
-            description: '- See Argument Reference above.'
-            id: '- id of the role'
-            name: '- name of the role'
-            permissions: '- list of permissions associated with the role'
-            roles: '- A list of roles associated with the user.'
-            service_name: |-
-                - (Required) The ID of the public cloud project. If omitted,
-                the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-            status: '- the status of the user. should be normally set to ''ok''.'
-            user_id: '- The ID of a public cloud project''s user.'
-            username: |-
-                - the username generated for the user. This username can be used with
-                the Openstack API.
-            users: '- The list of users of a public cloud project.'
+            backup_name: '- (Optional) The name of the backup files that are created. If empty, the name attribute is used.'
+            cron: '- (Mandatory) The cron periodicity at which the backup workflow is scheduled'
+            instanceId: the id of the instance to back up
+            max_execution_count: '- (Optional) The number of times the worflow is run. Default value is 0 which means that the workflow will be scheduled continously until its deletion'
+            name: '- (Mandatory) The worflow name that is used in the UI'
+            region_name: '- (Mandatory) The name of the openstack region.'
+            rotation: '- (Mandatory) The number of backup that are retained.'
+            service_name: '- (Optional) The id of the public cloud project. If omitted, the OVH_CLOUD_PROJECT_SERVICE environment variable is used.'
         importStatements: []
-    ovh_dbaas_logs_graylog_output_stream:
+    ovh_dbaas_logs_cluster:
         subCategory: ""
-        description: Creates a dbaas logs graylog output stream.
-        name: ovh_dbaas_logs_graylog_output_stream
-        title: ovh_dbaas_logs_graylog_output_stream
+        name: ovh_dbaas_logs_cluster
+        title: ""
+        examples:
+            - name: ldp
+              manifest: |-
+                {
+                  "archive_allowed_networks": [
+                    "10.0.0.0/16"
+                  ],
+                  "direct_input_allowed_networks": [
+                    "10.0.0.0/16"
+                  ],
+                  "query_allowed_networks": [
+                    "10.0.0.0/16"
+                  ],
+                  "service_name": "ldp-xx-xxxxx"
+                }
         argumentDocs:
-            can_alert: '- Indicates if the current user can create alert on the stream'
-            cold_storage_compression: '- Cold storage compression method. One of "LZMA", "GZIP", "DEFLATED", "ZSTD"'
-            cold_storage_content: '- ColdStorage content. One of "ALL", "GLEF", "PLAIN"'
-            cold_storage_enabled: '- Is Cold storage enabled?'
-            cold_storage_notify_enabled: '- Notify on new Cold storage archive'
-            cold_storage_retention: '- Cold storage retention in year'
-            cold_storage_target: '- ColdStorage destination. One of "PCA", "PCS"'
-            created_at: '- Stream creation'
-            description: '- (Required) Stream description'
-            indexing_enabled: '- Enable ES indexing'
-            indexing_max_size: '- Maximum indexing size (in GB)'
-            indexing_notify_enabled: '- If set, notify when size is near 80, 90 or 100 % of the maximum configured setting'
-            is_editable: '- Indicates if you are allowed to edit entry'
-            is_shareable: '- Indicates if you are allowed to share entry'
-            nb_alert_condition: '- Number of alert condition'
-            nb_archive: '- Number of coldstored archivesr'
-            parent_stream_id: '- Parent stream ID'
-            pause_indexing_on_max_size: '- If set, pause indexing when maximum size is reach'
-            retention_id: '- Retention ID'
-            service_name: '- (Required) The service name'
-            stream_id: '- Stream ID'
-            title: '- (Required) Stream description'
-            updated_at: '- Stream last updater'
-            web_socket_enabled: '- Enable Websocket'
+            archive_allowed_networks: '- List of IP blocks'
+            cluster_type: is type of cluster (DEDICATED, PRO or TRIAL)
+            dedicated_input_pem: is PEM for dedicated inputs
+            direct_input_allowed_networks: '- List of IP blocks'
+            direct_input_pem: is PEM for direct inputs
+            hostname: is cluster hostname hosting the tenant
+            is_default: is true if all content generated by given service will be placed on this cluster
+            is_unlocked: is true if given service can perform advanced operations on cluster
+            query_allowed_networks: '- List of IP blocks'
+            region: is datacenter localization
         importStatements: []
     ovh_dbaas_logs_input:
         subCategory: ""
-        description: Creates a dbaas logs input.
         name: ovh_dbaas_logs_input
-        title: ovh_dbaas_logs_input
+        title: ""
         examples:
             - name: input
               manifest: |-
@@ -2952,9 +1837,8 @@ resources:
         importStatements: []
     ovh_dedicated_ceph_acl:
         subCategory: ""
-        description: Creates a new ACL for dedicated CEPH cluster.
         name: ovh_dedicated_ceph_acl
-        title: dedicated_ceph_acl
+        title: ""
         examples:
             - name: my-acl
               manifest: |-
@@ -2971,17 +1855,79 @@ resources:
             network: '- (Required) The network IP to authorize'
             service_name: '- (Required) The internal name of your dedicated CEPH'
         importStatements: []
+    ovh_dedicated_nasha_partition:
+        subCategory: ""
+        name: ovh_dedicated_nasha_partition
+        title: ""
+        examples:
+            - name: my-partition
+              manifest: |-
+                {
+                  "name": "my-partition",
+                  "protocol": "NFS",
+                  "service_name": "zpool-12345",
+                  "size": 20
+                }
+        argumentDocs:
+            capacity: '- Percentage of partition space used in %'
+            description: '- A brief description of the partition'
+            name: '- (Required) name of the partition'
+            protocol: '- (Required) one of "NFS", "CIFS" or "NFS_CIFS"'
+            service_name: '- (Required) The internal name of your HA-NAS (it has to be ordered via OVHcloud interface)'
+            size: '- (Required) size of the partition in GB'
+            used_by_snapshots: '- Percentage of partition space used by snapshots in %'
+        importStatements: []
+    ovh_dedicated_nasha_partition_access:
+        subCategory: ""
+        name: ovh_dedicated_nasha_partition_access
+        title: ""
+        examples:
+            - name: my-partition
+              manifest: |-
+                {
+                  "ip": "123.123.123.123/32",
+                  "partition_name": "my-partition",
+                  "service_name": "zpool-12345",
+                  "type": "readwrite"
+                }
+        argumentDocs:
+            ip: '- (Required) ip block in x.x.x.x/x format'
+            partition_name: '- (Required) name of the partition'
+            service_name: '- (Required) The internal name of your HA-NAS (it has to be ordered via OVHcloud interface)'
+            type: '- (Required) one of "readwrite", "readonly"'
+        importStatements: []
+    ovh_dedicated_nasha_partition_snapshot:
+        subCategory: ""
+        name: ovh_dedicated_nasha_partition_snapshot
+        title: ""
+        examples:
+            - name: my-partition
+              manifest: |-
+                {
+                  "partition_name": "my-partition",
+                  "service_name": "zpool-12345",
+                  "type": "day-3"
+                }
+        argumentDocs:
+            partition_name: '- (Required) name of the partition'
+            service_name: '- (Required) The internal name of your HA-NAS (it has to be ordered via OVHcloud interface)'
+            type: '- (Required) Snapshot interval, allowed : day-1, day-2, day-3, day-7, hour-1, hour-6'
+        importStatements: []
     ovh_dedicated_server_install_task:
         subCategory: ""
-        description: Install your Dedicated Server
         name: ovh_dedicated_server_install_task
-        title: dedicated_server_install_task
+        title: ""
         examples:
             - name: server_install
               manifest: |-
                 {
                   "bootid_on_destroy": "${data.ovh_dedicated_server_boots.rescue.result[0]}",
-                  "service_name": "ns00000.ip-1-2-3.eu",
+                  "details": [
+                    {
+                      "custom_hostname": "mytest"
+                    }
+                  ],
+                  "service_name": "nsxxxxxxx.ip-xx-xx-xx.eu",
                   "template_name": "${ovh_me_installation_template.debian.template_name}"
                 }
               references:
@@ -2990,16 +1936,14 @@ resources:
               dependencies:
                 ovh_me_installation_template.debian: |-
                     {
-                      "base_template_name": "debian10_64",
+                      "base_template_name": "debian11_64",
                       "customization": [
                         {
-                          "change_log": "v1",
-                          "custom_hostname": "mytest",
                           "ssh_key_name": "${ovh_me_ssh_key.key.key_name}"
                         }
                       ],
                       "default_language": "en",
-                      "template_name": "mydebian10"
+                      "template_name": "mydebian11"
                     }
                 ovh_me_ssh_key.key: |-
                     {
@@ -3034,11 +1978,53 @@ resources:
             status: '- Task status (should be done)'
             template_name: '- (Required) Template name.'
         importStatements: []
+    ovh_dedicated_server_networking:
+        subCategory: ""
+        name: ovh_dedicated_server_networking
+        title: ""
+        examples:
+            - name: server
+              manifest: |-
+                {
+                  "interfaces": [
+                    {
+                      "macs": "${sort(flatten(data.ovh_dedicated_server.server.vnis.*.nics))}",
+                      "type": "vrack"
+                    }
+                  ],
+                  "service_name": "${local.dedicated_server}"
+                }
+              references:
+                service_name: local.dedicated_server
+            - name: server
+              manifest: |-
+                {
+                  "interfaces": [
+                    {
+                      "macs": "${slice(sort(flatten(data.ovh_dedicated_server.server.vnis.*.nics)), 0, 2)}",
+                      "type": "vrack"
+                    },
+                    {
+                      "macs": "${slice(sort(flatten(data.ovh_dedicated_server.server.vnis.*.nics)), 2, 4)}",
+                      "type": "vrack"
+                    }
+                  ],
+                  "service_name": "${local.dedicated_server}"
+                }
+              references:
+                service_name: local.dedicated_server
+        argumentDocs:
+            description: '- Operation description.'
+            interfaces: '- (Block List, Min: 1, Max: 2) Interface or interfaces aggregation.'
+            macs: (List of String) List of mac addresses to bind together.
+            service_name: '- (String) The service_name of your dedicated server. The full list of available dedicated servers can be found using the ovh_dedicated_servers datasource.'
+            status: '- status of the networking configuration (should be active).'
+            type: (String) Type of bonding to create.
+        importStatements: []
     ovh_dedicated_server_reboot_task:
         subCategory: ""
-        description: Reboot your Dedicated Server
         name: ovh_dedicated_server_reboot_task
-        title: dedicated_server_reboot_task
+        title: ""
         examples:
             - name: server_reboot
               manifest: |-
@@ -3055,7 +2041,7 @@ resources:
                     {
                       "boot_id": "${data.ovh_dedicated_server_boots.rescue.result[0]}",
                       "monitoring": true,
-                      "service_name": "ns00000.ip-1-2-3.eu",
+                      "service_name": "nsxxxxxxx.ip-xx-xx-xx.eu",
                       "state": "ok"
                     }
         argumentDocs:
@@ -3063,7 +2049,7 @@ resources:
             done_date: '- Completion date in RFC3339 format.'
             function: '- Function name (should be hardReboot).'
             id: '- The task id'
-            keepers: '- List of values traccked to trigger reboot, used also to form implicit dependencies'
+            keepers: '- List of values tracked to trigger reboot, used also to form implicit dependencies.'
             last_update: '- Last update in RFC3339 format.'
             service_name: '- (Required) The service_name of your dedicated server.'
             start_date: '- Task creation date in RFC3339 format.'
@@ -3071,16 +2057,15 @@ resources:
         importStatements: []
     ovh_dedicated_server_update:
         subCategory: ""
-        description: Update various properties of your Dedicated Server
         name: ovh_dedicated_server_update
-        title: dedicated_server_update
+        title: ""
         examples:
             - name: server
               manifest: |-
                 {
                   "boot_id": "${data.ovh_dedicated_server_boots.rescue.result[0]}",
                   "monitoring": true,
-                  "service_name": "ns00000.ip-1-2-3.eu",
+                  "service_name": "nsxxxxxxx.ip-xx-xx-xx.eu",
                   "state": "ok"
                 }
               references:
@@ -3093,15 +2078,13 @@ resources:
         importStatements: []
     ovh_domain_zone:
         subCategory: ""
-        description: Creates a domain zone.
         name: ovh_domain_zone
-        title: ovh_domain_zone
+        title: ""
         examples:
             - name: zone
               manifest: |-
                 {
                   "ovh_subsidiary": "${data.ovh_order_cart.mycart.ovh_subsidiary}",
-                  "payment_mean": "fidelity",
                   "plan": [
                     {
                       "configuration": [
@@ -3144,7 +2127,6 @@ resources:
             order_detail_id: '- order detail id'
             order_id: '- order id'
             ovh_subsidiary: '- (Required) OVHcloud Subsidiary'
-            payment_mean: '- (Required) OVHcloud payment mode (One of "default-payment-mean", "fidelity", "ovh-account")'
             plan: '- (Required) Product Plan to order'
             plan_code: '- (Required) Plan code'
             plan_option: '- (Optional) Product Plan to order'
@@ -3154,9 +2136,8 @@ resources:
         importStatements: []
     ovh_domain_zone_record:
         subCategory: ""
-        description: Provides a OVHcloud domain zone resource.
         name: ovh_domain_zone_record
-        title: ovh_domain_zone_record
+        title: ""
         examples:
             - name: test
               manifest: |-
@@ -3164,7 +2145,7 @@ resources:
                   "fieldtype": "A",
                   "subdomain": "test",
                   "target": "0.0.0.0",
-                  "ttl": "3600",
+                  "ttl": 3600,
                   "zone": "testdemo.ovh"
                 }
         argumentDocs:
@@ -3174,14 +2155,13 @@ resources:
             subDomain: '- The name of the record'
             subdomain: '- (Required) The name of the record'
             target: '- (Required) The value of the record'
-            ttl: '- (Optional) The TTL of the record'
+            ttl: '- (Optional) The TTL of the record, it shall be >= to 60.'
             zone: '- (Required) The domain to add the record to'
         importStatements: []
     ovh_domain_zone_redirection:
         subCategory: ""
-        description: Provides a OVHcloud domain zone resource.
         name: ovh_domain_zone_redirection
-        title: ovh_domain_zone_redirection
+        title: ""
         examples:
             - name: test
               manifest: |-
@@ -3205,11 +2185,156 @@ resources:
             visiblePermanent: -> Redirection by http code 301
             zone: '- (Required) The domain to add the redirection to'
         importStatements: []
+    ovh_hosting_privatedatabase:
+        subCategory: ""
+        name: ovh_hosting_privatedatabase
+        title: ""
+        examples:
+            - name: database
+              manifest: |-
+                {
+                  "display_name": "Postgresql-12",
+                  "ovh_subsidiary": "${data.ovh_order_cart.mycart.ovh_subsidiary}",
+                  "plan": [
+                    {
+                      "configuration": [
+                        {
+                          "label": "dc",
+                          "value": "gra3"
+                        },
+                        {
+                          "label": "engine",
+                          "value": "postgresql_12"
+                        }
+                      ],
+                      "duration": "${data.ovh_order_cart_product_plan.database.prices[3].duration}",
+                      "plan_code": "${data.ovh_order_cart_product_plan.database.plan_code}",
+                      "pricing_mode": "${data.ovh_order_cart_product_plan.database.selected_price[0].pricing_mode}"
+                    }
+                  ]
+                }
+              references:
+                ovh_subsidiary: data.ovh_order_cart.mycart.ovh_subsidiary
+                plan.duration: data.ovh_order_cart_product_plan.database.prices[3].duration
+                plan.plan_code: data.ovh_order_cart_product_plan.database.plan_code
+                plan.pricing_mode: data.ovh_order_cart_product_plan.database.selected_price[0].pricing_mode
+        argumentDocs:
+            catalog_name: '- Catalog name'
+            configuration: '- (Optional) Representation of a configuration item for personalizing product'
+            cpu: '- Number of CPU on your private database'
+            datacenter: '- Datacenter where this private database is located'
+            date: '- date'
+            description: '- Custom description on your privatedatabase order.'
+            details: '- Information about a Bill entry'
+            display_name: '- Name displayed in customer panel for your private database'
+            domain: '- expiration date'
+            duration: '- (Required) duration.'
+            expiration_date: '- expiration date'
+            hostname: '- Private database hostname'
+            hostname_ftp: '- Private database FTP hostname'
+            id: '- Private database id'
+            infrastructure: '- Infrastructure where service was stored'
+            label: '- (Required) Identifier of the resource'
+            offer: '- Type of the private database offer'
+            order: '- Details about your Order'
+            order_detail_id: '- order detail id'
+            order_id: '- order id'
+            ovh_subsidiary: '- (Required) OVHcloud Subsidiary'
+            plan: '- (Required) Product Plan to order'
+            plan_code: '- (Required) Plan code.'
+            plan_option: ': Product Plan to order'
+            port: ': Private database service port'
+            port_ftp: ': Private database FTP port'
+            pricing_mode: '- (Required) Pricing model identifier'
+            quantity: '- quantity'
+            quota_size: ': Space allowed (in MB) on your private database'
+            quota_used: ': Sapce used (in MB) on your private database'
+            ram: ': Amount of ram (in MB) on your private database'
+            server: ': Private database server name'
+            service_name: ': Service name'
+            state: ': Private database state'
+            type: ': Private database type'
+            value: '- (Required) Path to the resource in API.OVH.COM'
+            version: ': Private database available versions'
+            version_label: ': Private database version label'
+            version_number: ': Private database version number'
+        importStatements: []
+    ovh_hosting_privatedatabase_database:
+        subCategory: ""
+        name: ovh_hosting_privatedatabase_database
+        title: ""
+        examples:
+            - name: database
+              manifest: |-
+                {
+                  "database_name": "XXXXXX",
+                  "service_name": "XXXXXX"
+                }
+        argumentDocs:
+            database_name: '- (Required) Name of your new database'
+            service_name: '- The internal name of your private database.'
+        importStatements: []
+    ovh_hosting_privatedatabase_user:
+        subCategory: ""
+        name: ovh_hosting_privatedatabase_user
+        title: ""
+        examples:
+            - name: user
+              manifest: |-
+                {
+                  "password": "XXXXXX",
+                  "service_name": "XXXXXX",
+                  "user_name": "XXXXXX"
+                }
+        argumentDocs:
+            password: '- (Required) Password for the new user (alphanumeric, minimum one number and 8 characters minimum)'
+            service_name: '- The internal name of your private database.'
+            user_name: '- (Required) User name used to connect on your databases'
+        importStatements: []
+    ovh_hosting_privatedatabase_user_grant:
+        subCategory: ""
+        name: ovh_hosting_privatedatabase_user_grant
+        title: ""
+        examples:
+            - name: user_grant
+              manifest: |-
+                {
+                  "database_name": "ovhcloud",
+                  "grant": "admin",
+                  "service_name": "XXXXXX",
+                  "user_name": "terraform"
+                }
+        argumentDocs:
+            database_name: '- (Required) Database name where add grant.'
+            grant: '- (Required) Database name where add grant. Values can be:'
+            service_name: '- The internal name of your private database.'
+            user_name: '- (Required) User name used to connect on your databases.'
+        importStatements: []
+    ovh_hosting_privatedatabase_whitelist:
+        subCategory: ""
+        name: ovh_hosting_privatedatabase_whitelist
+        title: ""
+        examples:
+            - name: ip
+              manifest: |-
+                {
+                  "ip": "1.2.3.4",
+                  "name": "A name for your IP address",
+                  "service": true,
+                  "service_name": "XXXXXX",
+                  "sftp": true
+                }
+        argumentDocs:
+            ip: '- (Required) The whitelisted IP in your instance.'
+            name: '- (Required) Custom name for your Whitelisted IP.'
+            service: '- (Required) Authorize this IP to access service port. Values can be true or false'
+            service_name: '- The internal name of your private database.'
+            sftp: '- (Required) Authorize this IP to access SFTP port. Values can be true or false'
+        importStatements: []
     ovh_ip_reverse:
         subCategory: ""
-        description: Provides a OVHcloud IP reverse resource.
         name: ovh_ip_reverse
-        title: ovh_ip_reverse
+        title: ""
         examples:
             - name: test
               manifest: |-
@@ -3225,16 +2350,14 @@ resources:
         importStatements: []
     ovh_ip_service:
         subCategory: ""
-        description: Attach an Ip block to a VRack.
         name: ovh_ip_service
-        title: vrack_ip
+        title: ""
         examples:
             - name: ipblock
               manifest: |-
                 {
                   "description": "${data.ovh_order_cart.mycart.description}",
                   "ovh_subsidiary": "${data.ovh_order_cart.mycart.ovh_subsidiary}",
-                  "payment_mean": "ovh-account",
                   "plan": [
                     {
                       "configuration": [
@@ -3261,7 +2384,6 @@ resources:
                       "description": "${data.ovh_order_cart.mycart.description}",
                       "name": "${data.ovh_order_cart.mycart.description}",
                       "ovh_subsidiary": "${data.ovh_order_cart.mycart.ovh_subsidiary}",
-                      "payment_mean": "fidelity",
                       "plan": [
                         {
                           "duration": "${data.ovh_order_cart_product_plan.vrack.selected_price.0.duration}",
@@ -3284,16 +2406,14 @@ resources:
         importStatements: []
     ovh_iploadbalancing:
         subCategory: ""
-        description: Orders an IP load balancing.
         name: ovh_iploadbalancing
-        title: ovh_iploadbalancing
+        title: ""
         examples:
             - name: iplb-lb1
               manifest: |-
                 {
                   "display_name": "my ip loadbalancing",
                   "ovh_subsidiary": "${data.ovh_order_cart.mycart.ovh_subsidiary}",
-                  "payment_mean": "ovh-account",
                   "plan": [
                     {
                       "duration": "${data.ovh_order_cart_product_plan.iplb.selected_price.0.duration}",
@@ -3339,7 +2459,6 @@ resources:
             order_id: '- order id'
             orderable_zone: '- Available additional zone for your Load Balancer'
             ovh_subsidiary: '- (Required) OVHcloud Subsidiary'
-            payment_mean: '- (Required) OVHcloud payment mode (One of "default-payment-mean", "fidelity", "ovh-account")'
             plan: '- (Required) Product Plan to order'
             plan_code: '- (Required) Plan code'
             plan_option: '- (Optional) Product Plan to order'
@@ -3353,11 +2472,123 @@ resources:
             vrack_name: '- Name of the vRack on which the current Load Balancer is attached to, as it is named on vRack product'
             zone: '- Location where your service is'
         importStatements: []
+    ovh_iploadbalancing_http_farm:
+        subCategory: ""
+        name: ovh_iploadbalancing_http_farm
+        title: ""
+        examples:
+            - name: farmname
+              manifest: |-
+                {
+                  "display_name": "ingress-8080-gra",
+                  "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
+                  "zone": "GRA"
+                }
+        argumentDocs:
+            balance: '- Load balancing algorithm. roundrobin if null (first, leastconn, roundrobin, source)'
+            display_name: '- Readable label for loadbalancer farm'
+            force_ssl: '- Force use of SSL (TLS)'
+            interval: '- probe interval, Value between 30 and 3600 seconds, default 30'
+            match: '- What to match pattern against (contains, default, internal, matches, status)'
+            method: '- HTTP probe method (GET, HEAD, OPTIONS, internal)'
+            negate: '- Negate probe result'
+            pattern: '- Pattern to match against match'
+            port: '- Port attached to your farm ([1..49151]). Inherited from frontend if null'
+            probe: '- define a backend healthcheck probe'
+            service_name: '- (Required) The internal name of your IP load balancing'
+            stickiness: "- \tStickiness type. No stickiness if null (sourceIp, cookie)"
+            type: '- (Required) Valid values : http, internal, mysql, oco, pgsql, smtp, tcp'
+            url: '- URL for HTTP probe type.'
+            vrack_network_id: '- Internal Load Balancer identifier of the vRack private network to attach to your farm, mandatory when your Load Balancer is attached to a vRack'
+            zone: '- (Required) Zone where the farm will be defined (ie. GRA, BHS also supports ALL)'
+        importStatements: []
+    ovh_iploadbalancing_http_farm_server:
+        subCategory: ""
+        name: ovh_iploadbalancing_http_farm_server
+        title: ""
+        examples:
+            - name: backend
+              manifest: |-
+                {
+                  "address": "4.5.6.7",
+                  "backup": true,
+                  "display_name": "mybackend",
+                  "farm_id": "${ovh_iploadbalancing_http_farm.farmname.id}",
+                  "port": 80,
+                  "probe": true,
+                  "proxy_protocol_version": "v2",
+                  "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
+                  "ssl": false,
+                  "status": "active",
+                  "weight": 2
+                }
+              dependencies:
+                ovh_iploadbalancing_http_farm.farmname: |-
+                    {
+                      "port": 8080,
+                      "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
+                      "zone": "all"
+                    }
+        argumentDocs:
+            address: '- Address of the backend server (IP from either internal or OVHcloud network)'
+            backup: '- is it a backup server used in case of failure of all the non-backup backends'
+            cookie: '- Value of the stickiness cookie used for this backend.'
+            display_name: '- Label for the server'
+            farm_id: '- ID of the farm this server is attached to'
+            on_marked_down: '- enable action when backend marked down. (shutdown-sessions)'
+            port: '- Port that backend will respond on'
+            probe: '- defines if backend will be probed to determine health and keep as active in farm if healthy'
+            proxy_protocol_version: '- version of the PROXY protocol used to pass origin connection information from loadbalancer to receiving service (v1, v2, v2-ssl, v2-ssl-cn)'
+            service_name: '- (Required) The internal name of your IP load balancing'
+            ssl: '- is the connection ciphered with SSL (TLS)'
+            status: '- backend status - active or inactive'
+            weight: '- used in loadbalancing algorithm'
+        importStatements: []
+    ovh_iploadbalancing_http_frontend:
+        subCategory: ""
+        name: ovh_iploadbalancing_http_frontend
+        title: ""
+        examples:
+            - name: testfrontend
+              manifest: |-
+                {
+                  "default_farm_id": "${ovh_iploadbalancing_http_farm.farm80.id}",
+                  "display_name": "ingress-8080-gra",
+                  "port": "80,443",
+                  "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
+                  "zone": "all"
+                }
+              dependencies:
+                ovh_iploadbalancing_http_farm.farm80: |-
+                    {
+                      "display_name": "ingress-8080-gra",
+                      "port": 80,
+                      "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
+                      "zone": "all"
+                    }
+        argumentDocs:
+            allowed_source: '- Restrict IP Load Balancing access to these ip block. No restriction if null. List of IP blocks.'
+            dedicated_ipfo: '- Only attach frontend on these ip. No restriction if null. List of Ip blocks.'
+            default_farm_id: '- Default TCP Farm of your frontend'
+            default_ssl_id: '- Default ssl served to your customer'
+            disabled: '- Disable your frontend. Default: ''false'''
+            display_name: '- Human readable name for your frontend, this field is for you'
+            hsts: '- HTTP Strict Transport Security. Default: ''false'''
+            http_header: '- HTTP headers to add to the frontend. List of string.'
+            id: '- Id of your frontend'
+            port: |-
+                - Port(s) attached to your frontend. Supports single port (numerical value),
+                range (2 dash-delimited increasing ports) and comma-separated list of 'single port'
+                and/or 'range'. Each port must be in the [1;49151] range
+            redirect_location: '- Redirection HTTP'''
+            service_name: '- (Required) The internal name of your IP load balancing'
+            ssl: '- SSL deciphering. Default: ''false'''
+            zone: '- (Required) Zone where the frontend will be defined (ie. gra, bhs also supports all)'
+        importStatements: []
     ovh_iploadbalancing_http_route:
         subCategory: ""
-        description: Manage http route for a loadbalancer service.
         name: ovh_iploadbalancing_http_route
-        title: ovh_iploadbalancing_http_route
+        title: ""
         examples:
             - name: httpsredirect
               manifest: |-
@@ -3392,9 +2623,8 @@ resources:
         importStatements: []
     ovh_iploadbalancing_http_route_rule:
         subCategory: ""
-        description: Manage rules for HTTP route.
         name: ovh_iploadbalancing_http_route_rule
-        title: ovh_iploadbalancing_http_route_rule
+        title: ""
         examples:
             - name: examplerule
               manifest: |-
@@ -3446,9 +2676,8 @@ resources:
         importStatements: []
     ovh_iploadbalancing_refresh:
         subCategory: ""
-        description: Applies changes from other ovh_iploadbalancing_* resources to the production configuration of loadbalancers.
         name: ovh_iploadbalancing_refresh
-        title: iploadbalancing_refresh
+        title: ""
         examples:
             - name: mylb
               manifest: |-
@@ -3456,13 +2685,13 @@ resources:
                   "keepers": [
                     "${ovh_iploadbalancing_tcp_farm_server.backend.*.address}"
                   ],
-                  "service_name": "${data.ovh_iploadbalancing.lb.id}"
+                  "service_name": "${data.ovh_iploadbalancing.lb.service_name}"
                 }
               dependencies:
                 ovh_iploadbalancing_tcp_farm.farmname: |-
                     {
                       "port": 8080,
-                      "service_name": "${data.ovh_iploadbalancing.lb.id}",
+                      "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
                       "zone": "all"
                     }
                 ovh_iploadbalancing_tcp_farm_server.backend: |-
@@ -3473,8 +2702,8 @@ resources:
                       "farm_id": "${ovh_iploadbalancing_tcp_farm.farmname.id}",
                       "port": 80,
                       "probe": true,
-                      "proxy_protocol_version": "${v2}",
-                      "service_name": "${data.ovh_iploadbalancing.lb.id}",
+                      "proxy_protocol_version": "v2",
+                      "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
                       "ssl": false,
                       "status": "active",
                       "weight": 2
@@ -3485,15 +2714,14 @@ resources:
         importStatements: []
     ovh_iploadbalancing_tcp_farm:
         subCategory: ""
-        description: Creates a backend server group (farm).
         name: ovh_iploadbalancing_tcp_farm
-        title: iploadbalancing_tcp_farm
+        title: ""
         examples:
             - name: farmname
               manifest: |-
                 {
                   "display_name": "ingress-8080-gra",
-                  "service_name": "${data.ovh_iploadbalancing.lb.id}",
+                  "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
                   "zone": "GRA"
                 }
         argumentDocs:
@@ -3516,9 +2744,8 @@ resources:
         importStatements: []
     ovh_iploadbalancing_tcp_farm_server:
         subCategory: ""
-        description: Creates a backend server entry linked to farm.
         name: ovh_iploadbalancing_tcp_farm_server
-        title: iploadbalancing_tcp_farm_server
+        title: ""
         examples:
             - name: backend
               manifest: |-
@@ -3529,19 +2756,17 @@ resources:
                   "farm_id": "${ovh_iploadbalancing_tcp_farm.farmname.id}",
                   "port": 80,
                   "probe": true,
-                  "proxy_protocol_version": "${v2}",
-                  "service_name": "${data.ovh_iploadbalancing.lb.id}",
+                  "proxy_protocol_version": "v2",
+                  "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
                   "ssl": false,
                   "status": "active",
                   "weight": 2
                 }
-              references:
-                proxy_protocol_version: v2
               dependencies:
                 ovh_iploadbalancing_tcp_farm.farmname: |-
                     {
                       "port": 8080,
-                      "service_name": "${data.ovh_iploadbalancing.lb.id}",
+                      "service_name": "${data.ovh_iploadbalancing.lb.service_name}",
                       "zone": "all"
                     }
         argumentDocs:
@@ -3550,6 +2775,7 @@ resources:
             cookie: '- Value of the stickiness cookie used for this backend.'
             display_name: '- Label for the server'
             farm_id: '- ID of the farm this server is attached to'
+            on_marked_down: '- enable action when backend marked down. (shutdown-sessions)'
             port: '- Port that backend will respond on'
             probe: '- defines if backend will be probed to determine health and keep as active in farm if healthy'
             proxy_protocol_version: '- version of the PROXY protocol used to pass origin connection information from loadbalancer to receiving service (v1, v2, v2-ssl, v2-ssl-cn)'
@@ -3560,9 +2786,8 @@ resources:
         importStatements: []
     ovh_iploadbalancing_tcp_frontend:
         subCategory: ""
-        description: Creates a frontend for an IP Load balancing service.
         name: ovh_iploadbalancing_tcp_frontend
-        title: iploadbalancing_tcp_frontend
+        title: ""
         examples:
             - name: testfrontend
               manifest: |-
@@ -3599,9 +2824,8 @@ resources:
         importStatements: []
     ovh_iploadbalancing_tcp_route:
         subCategory: ""
-        description: Manage tcp route for a loadbalancer service.
         name: ovh_iploadbalancing_tcp_route
-        title: ovh_iploadbalancing_tcp_route
+        title: ""
         examples:
             - name: tcpreject
               manifest: |-
@@ -3633,9 +2857,8 @@ resources:
         importStatements: []
     ovh_iploadbalancing_tcp_route_rule:
         subCategory: ""
-        description: Manage rules for TCP route.
         name: ovh_iploadbalancing_tcp_route_rule
-        title: ovh_iploadbalancing_tcp_route_rule
+        title: ""
         examples:
             - name: examplerule
               manifest: |-
@@ -3674,9 +2897,8 @@ resources:
         importStatements: []
     ovh_iploadbalancing_vrack_network:
         subCategory: ""
-        description: Manage a vrack network for your IP Loadbalancing service.
         name: ovh_iploadbalancing_vrack_network
-        title: ovh_iploadbalancing_vrack_network
+        title: ""
         examples:
             - name: network
               manifest: |-
@@ -3712,22 +2934,30 @@ resources:
             vlan: '- VLAN of the private network in the vRack. 0 if the private network is not in a VLAN'
             vrack_network_id: '- (Required) Internal Load Balancer identifier of the vRack private network'
         importStatements: []
-    ovh_iploadbalancing_vrack_networks:
+    ovh_me_identity_group:
         subCategory: ""
-        description: Get the list of Vrack network ids available for your IPLoadbalancer associated with your OVHcloud account.
-        name: ovh_iploadbalancing_vrack_networks
-        title: ovh_iploadbalancing_vrack_networks
+        name: ovh_me_identity_group
+        title: ""
+        examples:
+            - name: my_group
+              manifest: |-
+                {
+                  "description": "Some custom description",
+                  "name": "my_group_name",
+                  "role": "NONE"
+                }
         argumentDocs:
-            result: '- The list of vrack network ids.'
-            service_name: '- (Required) The internal name of your IP load balancing'
-            subnet: '- Filters networks on the subnet.'
-            vlan_id: '- Filters networks on the vlan id.'
+            creation: '- Creation date of this group.'
+            default_group: '- Is the group a default and immutable one.'
+            description: '- Group description.'
+            last_update: '- Date of the last update of this group.'
+            name: '- Group name.'
+            role: '- Role associated with the group. Valid roles are ADMIN, REGULAR, UNPRIVILEGED, and NONE.'
         importStatements: []
     ovh_me_identity_user:
         subCategory: ""
-        description: Creates an identity user.
         name: ovh_me_identity_user
-        title: ovh_me_identity_user
+        title: ""
         examples:
             - name: my_user
               manifest: |-
@@ -3751,20 +2981,19 @@ resources:
         importStatements: []
     ovh_me_installation_template:
         subCategory: ""
-        description: Creates a custom installation template available for dedicated servers.
         name: ovh_me_installation_template
-        title: ovh_me_installation_template
+        title: ""
         examples:
             - name: mytemplate
               manifest: |-
                 {
                   "base_template_name": "centos7_64",
-                  "default_language": "fr",
+                  "default_language": "en",
                   "template_name": "mytemplate"
                 }
         argumentDocs:
             available_languages: ': List of all language available for this template.'
-            base_template_name: ': (Required) OVHcloud template name yours will be based on, choose one among the list given by compatibleTemplates function.'
+            base_template_name: ': (Required) The name of an existing installation template, choose one among the list given by ovh_dedicated_installation_templates datasource.'
             beta: ': This distribution is new and, although tested and functional, may still display odd behaviour.'
             bit_format: ': This template bit format (32 or 64).'
             category: ': Category of this template (informative only). (basic, customer, hosting, other, readyToUse, virtualisation).'
@@ -3786,18 +3015,15 @@ resources:
             remove_default_partition_schemes: ': (Required) Remove default partition schemes at creation.'
             ssh_key_name: ': Name of the ssh key that should be installed. Password login will be disabled.'
             supports_distribution_kernel: ': This distribution supports installation using the distribution''s native kernel instead of the recommended OVHcloud kernel.'
-            supports_gpt_label: ': This distribution supports the GUID Partition Table (GPT), providing up to 128 partitions that can have more than 2TB.'
             supports_rtm: ': This distribution supports RTM software.'
             supports_sql_server: ': This distribution supports the microsoft SQL server.'
-            supports_uefi: ': This distribution supports UEFI setup (no,only,yes).'
             template_name: ': (Required)  This template name.'
             use_distribution_kernel: ': Use the distribution''s native kernel instead of the recommended OV'
         importStatements: []
     ovh_me_installation_template_partition_scheme:
         subCategory: ""
-        description: Creates a partition scheme for a custom installation template available for dedicated servers.
         name: ovh_me_installation_template_partition_scheme
-        title: ovh_me_installation_template_partition_scheme
+        title: ""
         examples:
             - name: scheme
               manifest: |-
@@ -3823,9 +3049,8 @@ resources:
         importStatements: []
     ovh_me_installation_template_partition_scheme_hardware_raid:
         subCategory: ""
-        description: Creates a hardware raid group in the partition scheme of a custom installation template available for dedicated servers.
         name: ovh_me_installation_template_partition_scheme_hardware_raid
-        title: ovh_me_installation_template_partition_scheme_hardware_raid
+        title: ""
         examples:
             - name: group1
               manifest: |-
@@ -3867,9 +3092,8 @@ resources:
         importStatements: []
     ovh_me_installation_template_partition_scheme_partition:
         subCategory: ""
-        description: Creates a partition in the partition scheme of a custom installation template available for dedicated servers.
         name: ovh_me_installation_template_partition_scheme_partition
-        title: ovh_me_installation_template_partition_scheme_partition
+        title: ""
         examples:
             - name: root
               manifest: |-
@@ -3899,22 +3123,21 @@ resources:
                       "template_name": "${ovh_me_installation_template.mytemplate.template_name}"
                     }
         argumentDocs:
-            filesystem: ': Partition filesystem.'
+            filesystem: ': Partition filesystem. Enum with possibles values:'
             id: ': a fake id associated with this partition scheme partition formatted as follow: template_name/scheme_name/mountpoint'
             mountpoint: ': (Required) partition mount point.'
             order: ': step or order. specifies the creation order of the partition on the disk'
-            raid: ': raid partition type.'
+            raid: ': raid partition type. Enum with possible values:'
             scheme_name: ': (Required) The partition scheme name.'
             size: ': size of partition in MB, 0 => rest of the space.'
             template_name: ': (Required) The template name of the partition scheme.'
-            type: ': partition type.'
+            type: ': partition type. Enum with possible values:'
             volume_name: ': The volume name needed for proxmox distribution'
         importStatements: []
     ovh_me_ipxe_script:
         subCategory: ""
-        description: Creates an IPXE Script.
         name: ovh_me_ipxe_script
-        title: ovh_me_ipxe_script
+        title: ""
         examples:
             - name: script
               manifest: |-
@@ -3929,9 +3152,8 @@ resources:
         importStatements: []
     ovh_me_ssh_key:
         subCategory: ""
-        description: Creates an SSH Key.
         name: ovh_me_ssh_key
-        title: ovh_me_ssh_key
+        title: ""
         examples:
             - name: mykey
               manifest: |-
@@ -3946,9 +3168,8 @@ resources:
         importStatements: []
     ovh_vrack:
         subCategory: ""
-        description: Orders a vrack.
         name: ovh_vrack
-        title: ovh_vrack
+        title: ""
         examples:
             - name: vrack
               manifest: |-
@@ -3956,7 +3177,6 @@ resources:
                   "description": "my vrack",
                   "name": "my vrack",
                   "ovh_subsidiary": "${data.ovh_order_cart.mycart.ovh_subsidiary}",
-                  "payment_mean": "fidelity",
                   "plan": [
                     {
                       "duration": "${data.ovh_order_cart_product_plan.vrack.selected_price.0.duration}",
@@ -3985,7 +3205,6 @@ resources:
             order_detail_id: '- order detail id'
             order_id: '- order id'
             ovh_subsidiary: '- (Required) OVHcloud Subsidiary'
-            payment_mean: '- (Required) OVHcloud payment mode (One of "default-payment-mean", "fidelity", "ovh-account")'
             plan: '- (Required) Product Plan to order'
             plan_code: '- (Required) Plan code'
             plan_option: '- (Optional) Product Plan to order'
@@ -3996,9 +3215,8 @@ resources:
         importStatements: []
     ovh_vrack_cloudproject:
         subCategory: ""
-        description: Attach a Public Cloud Project to a VRack.
         name: ovh_vrack_cloudproject
-        title: vrack_cloudproject
+        title: ""
         examples:
             - name: vcp
               manifest: |-
@@ -4016,9 +3234,8 @@ resources:
         importStatements: []
     ovh_vrack_dedicated_server:
         subCategory: ""
-        description: Attach a Dedicated Server to a VRack.
         name: ovh_vrack_dedicated_server
-        title: vrack_dedicated_server
+        title: ""
         examples:
             - name: vds
               manifest: |-
@@ -4034,16 +3251,17 @@ resources:
         importStatements: []
     ovh_vrack_dedicated_server_interface:
         subCategory: ""
-        description: Attach a Dedicated Server Network Interface to a VRack.
         name: ovh_vrack_dedicated_server_interface
-        title: vrack_dedicated_server_interface
+        title: ""
         examples:
             - name: vdsi
               manifest: |-
                 {
-                  "interface_id": "67890",
-                  "service_name": "12345"
+                  "interface_id": "${data.ovh_dedicated_server.server.enabled_vrack_vnis[0]}",
+                  "service_name": "pn-xxxxxxx"
                 }
+              references:
+                interface_id: data.ovh_dedicated_server.server.enabled_vrack_vnis[0]
         argumentDocs:
             interface_id: '- (Required) The id of dedicated server network interface.'
             service_name: |-
@@ -4052,9 +3270,8 @@ resources:
         importStatements: []
     ovh_vrack_iploadbalancing:
         subCategory: ""
-        description: Attach a IP Loadbalanging to a VRack.
         name: ovh_vrack_iploadbalancing
-        title: vrack_iploadbalancing
+        title: ""
         examples:
             - name: viplb
               manifest: |-
@@ -4065,39 +3282,4 @@ resources:
         argumentDocs:
             ip_loadbalancing: '- (Required) The id of the IP Load Balancing.'
             service_name: '- (Required) The id of the vrack.'
-        importStatements: []
-    ovh_vracks:
-        subCategory: ""
-        description: Get the list of Vrack ids available for your OVHcloud account.
-        name: ovh_vracks
-        title: ovh_vracks
-        argumentDocs:
-            result: '- The list of vrack service name available for your OVHcloud account.'
-        importStatements: []
-    vps:
-        subCategory: ""
-        description: Get information of a vps associatd with your OVJ Account
-        name: vps
-        title: vps
-        argumentDocs:
-            cluster: '- The OVHcloud cluster the vps is in'
-            datacenter: '- The datacenter in which the vps is located'
-            datacenter.longname: '- The fullname of the datacenter (ex: "Strasbourg SBG1")'
-            datacenter.name: '- The short name of the datacenter (ex: "sbg1)'
-            displayname: '- The displayed name in the OVHcloud web admin'
-            ips: '- The list of IPs addresses attached to the vps'
-            keymap: '- The keymap for the ip kvm, valid values "", "fr", "us"'
-            memory: '- The amount of memory in MB of the vps.'
-            model: '- A dict describing the type of vps.'
-            model.name: '- The model name (ex: model1)'
-            model.offer: '- The model human description (ex: "VPS 2016 SSD 1")'
-            model.version: '- The model version (ex: "2017v2")'
-            netbootmode: '- The source of the boot kernel'
-            offertype: '- The type of offer (ssd, cloud, classic)'
-            service_name: '- (Required) The service_name of your dedicated server.'
-            slamonitoring: '- A boolean to indicate if OVHcloud SLA monitoring is active.'
-            state: '-  The state of the vps'
-            type: '- The type of server'
-            vcore: '- The number of vcore of the vps'
-            zone: '- The OVHcloud zone where the vps is'
         importStatements: []

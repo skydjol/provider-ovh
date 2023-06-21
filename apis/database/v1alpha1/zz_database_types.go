@@ -15,6 +15,10 @@ import (
 
 type DatabaseObservation struct {
 
+	// Advanced configuration key / value.
+	// Advanced configuration key / value
+	AdvancedConfiguration map[string]*string `json:"advancedConfiguration,omitempty" tf:"advanced_configuration,omitempty"`
+
 	// Time on which backups start every day.
 	// Time on which backups start every day
 	BackupTime *string `json:"backupTime,omitempty" tf:"backup_time,omitempty"`
@@ -23,12 +27,39 @@ type DatabaseObservation struct {
 	// Date of the creation of the cluster
 	CreatedAt *string `json:"createdAt,omitempty" tf:"created_at,omitempty"`
 
+	// Small description of the database service.
+	// Description of the cluster
+	Description *string `json:"description,omitempty" tf:"description,omitempty"`
+
+	// The disk size (in GB) of the database service.
+	// Disk size attributes of the cluster
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
+	// Defines the disk type of the database service.
+	// Disk type attributes of the cluster
+	DiskType *string `json:"diskType,omitempty" tf:"disk_type,omitempty"`
+
 	// List of all endpoints objects of the service.
 	// List of all endpoints of the service
 	Endpoints []EndpointsObservation `json:"endpoints,omitempty" tf:"endpoints,omitempty"`
 
+	// The database engine you want to deploy. To get a full list of available engine visit.
+	// public documentation.
+	// Name of the engine of the service
+	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
+
+	// A valid OVHcloud public cloud database flavor name in which the nodes will be started.
+	// Ex: "db1-7". Changing this value upgrade the nodes with the new flavor.
+	// You can find the list of flavor names: https://www.ovhcloud.com/fr/public-cloud/prices/
+	// The node flavor used for this cluster
+	Flavor *string `json:"flavor,omitempty" tf:"flavor,omitempty"`
+
 	// Public Cloud Database Service ID
 	ID *string `json:"id,omitempty" tf:"id,omitempty"`
+
+	// Defines whether the REST API is enabled on a kafka cluster
+	// Defines whether the REST API is enabled on a Kafka cluster
+	KafkaRestAPI *bool `json:"kafkaRestApi,omitempty" tf:"kafka_rest_api,omitempty"`
 
 	// Time on which maintenances can start every day.
 	// Time on which maintenances can start every day
@@ -38,30 +69,62 @@ type DatabaseObservation struct {
 	// Type of network of the cluster
 	NetworkType *string `json:"networkType,omitempty" tf:"network_type,omitempty"`
 
+	// List of nodes object.
+	// Multi region cluster are not yet available, all node should be identical.
+	// List of nodes composing the service
+	Nodes []NodesObservation `json:"nodes,omitempty" tf:"nodes,omitempty"`
+
+	// Defines whether the ACLs are enabled on an OpenSearch cluster
+	// Defines whether the ACLs are enabled on an Opensearch cluster
+	OpensearchAclsEnabled *bool `json:"opensearchAclsEnabled,omitempty" tf:"opensearch_acls_enabled,omitempty"`
+
+	// Plan of the cluster.
+	// Enum: "essential", "business", "enterprise".
+	// Plan of the cluster
+	Plan *string `json:"plan,omitempty" tf:"plan,omitempty"`
+
+	// The id of the public cloud project. If omitted,
+	// the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
+
 	// Current status of the cluster.
 	// Current status of the cluster
 	Status *string `json:"status,omitempty" tf:"status,omitempty"`
+
+	// The version of the engine in which the service should be deployed
+	// Version of the engine deployed on the cluster
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type DatabaseParameters struct {
+
+	// Advanced configuration key / value.
+	// Advanced configuration key / value
+	// +kubebuilder:validation:Optional
+	AdvancedConfiguration map[string]*string `json:"advancedConfiguration,omitempty" tf:"advanced_configuration,omitempty"`
 
 	// Small description of the database service.
 	// Description of the cluster
 	// +kubebuilder:validation:Optional
 	Description *string `json:"description,omitempty" tf:"description,omitempty"`
 
+	// The disk size (in GB) of the database service.
+	// Disk size attributes of the cluster
+	// +kubebuilder:validation:Optional
+	DiskSize *float64 `json:"diskSize,omitempty" tf:"disk_size,omitempty"`
+
 	// The database engine you want to deploy. To get a full list of available engine visit.
 	// public documentation.
 	// Name of the engine of the service
-	// +kubebuilder:validation:Required
-	Engine *string `json:"engine" tf:"engine,omitempty"`
+	// +kubebuilder:validation:Optional
+	Engine *string `json:"engine,omitempty" tf:"engine,omitempty"`
 
 	// A valid OVHcloud public cloud database flavor name in which the nodes will be started.
 	// Ex: "db1-7". Changing this value upgrade the nodes with the new flavor.
 	// You can find the list of flavor names: https://www.ovhcloud.com/fr/public-cloud/prices/
 	// The node flavor used for this cluster
-	// +kubebuilder:validation:Required
-	Flavor *string `json:"flavor" tf:"flavor,omitempty"`
+	// +kubebuilder:validation:Optional
+	Flavor *string `json:"flavor,omitempty" tf:"flavor,omitempty"`
 
 	// Defines whether the REST API is enabled on a kafka cluster
 	// Defines whether the REST API is enabled on a Kafka cluster
@@ -71,8 +134,8 @@ type DatabaseParameters struct {
 	// List of nodes object.
 	// Multi region cluster are not yet available, all node should be identical.
 	// List of nodes composing the service
-	// +kubebuilder:validation:Required
-	Nodes []NodesParameters `json:"nodes" tf:"nodes,omitempty"`
+	// +kubebuilder:validation:Optional
+	Nodes []NodesParameters `json:"nodes,omitempty" tf:"nodes,omitempty"`
 
 	// Defines whether the ACLs are enabled on an OpenSearch cluster
 	// Defines whether the ACLs are enabled on an Opensearch cluster
@@ -82,18 +145,18 @@ type DatabaseParameters struct {
 	// Plan of the cluster.
 	// Enum: "essential", "business", "enterprise".
 	// Plan of the cluster
-	// +kubebuilder:validation:Required
-	Plan *string `json:"plan" tf:"plan,omitempty"`
+	// +kubebuilder:validation:Optional
+	Plan *string `json:"plan,omitempty" tf:"plan,omitempty"`
 
 	// The id of the public cloud project. If omitted,
 	// the OVH_CLOUD_PROJECT_SERVICE environment variable is used.
-	// +kubebuilder:validation:Required
-	ServiceName *string `json:"serviceName" tf:"service_name,omitempty"`
+	// +kubebuilder:validation:Optional
+	ServiceName *string `json:"serviceName,omitempty" tf:"service_name,omitempty"`
 
 	// The version of the engine in which the service should be deployed
 	// Version of the engine deployed on the cluster
-	// +kubebuilder:validation:Required
-	Version *string `json:"version" tf:"version,omitempty"`
+	// +kubebuilder:validation:Optional
+	Version *string `json:"version,omitempty" tf:"version,omitempty"`
 }
 
 type EndpointsObservation struct {
@@ -127,6 +190,19 @@ type EndpointsParameters struct {
 }
 
 type NodesObservation struct {
+
+	// Private network id in which the node should be deployed. It's the regional openstackId of the private network
+	// Private network ID in which the node is. It's the regional openstackId of the private network.
+	NetworkID *string `json:"networkId,omitempty" tf:"network_id,omitempty"`
+
+	// Public cloud region in which the node should be deployed.
+	// Ex: "GRA'.
+	// Region of the node
+	Region *string `json:"region,omitempty" tf:"region,omitempty"`
+
+	// Private subnet ID in which the node is.
+	// Private subnet ID in which the node is
+	SubnetID *string `json:"subnetId,omitempty" tf:"subnet_id,omitempty"`
 }
 
 type NodesParameters struct {
@@ -162,7 +238,7 @@ type DatabaseStatus struct {
 
 // +kubebuilder:object:root=true
 
-// Database is the Schema for the Databases API. Creates a managed database cluster in a public cloud project.
+// Database is the Schema for the Databases API.
 // +kubebuilder:printcolumn:name="READY",type="string",JSONPath=".status.conditions[?(@.type=='Ready')].status"
 // +kubebuilder:printcolumn:name="SYNCED",type="string",JSONPath=".status.conditions[?(@.type=='Synced')].status"
 // +kubebuilder:printcolumn:name="EXTERNAL-NAME",type="string",JSONPath=".metadata.annotations.crossplane\\.io/external-name"
@@ -172,8 +248,14 @@ type DatabaseStatus struct {
 type Database struct {
 	metav1.TypeMeta   `json:",inline"`
 	metav1.ObjectMeta `json:"metadata,omitempty"`
-	Spec              DatabaseSpec   `json:"spec"`
-	Status            DatabaseStatus `json:"status,omitempty"`
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.engine)",message="engine is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.flavor)",message="flavor is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.nodes)",message="nodes is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.plan)",message="plan is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.serviceName)",message="serviceName is a required parameter"
+	// +kubebuilder:validation:XValidation:rule="self.managementPolicy == 'ObserveOnly' || has(self.forProvider.version)",message="version is a required parameter"
+	Spec   DatabaseSpec   `json:"spec"`
+	Status DatabaseStatus `json:"status,omitempty"`
 }
 
 // +kubebuilder:object:root=true
